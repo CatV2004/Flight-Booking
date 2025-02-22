@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+    <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+        <!-- Header Section -->
+        <h2 style="text-align: center; color: #333;">Xác nhận đơn hàng</h2>
+        <p style="text-align: center; color: #555;">Cảm ơn bạn đã tin tưởng chúng tôi.</p>
+
+        <!-- Thông tin chung của đơn hàng -->
+        <div style="margin-bottom: 30px;">
+            <h4>Thông Tin Đơn Hàng</h4>
+            <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;">
+                <tr>
+                    <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Mã Đơn Hàng</th>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{ order_info[0].ma_don_hang }}</td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Tổng Giá Trị</th>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{ '{:,.0f}'.format(order_info[0].tong_gia_tri) }} VND</td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Ngày Tạo Đơn</th>
+                    <td style="padding: 8px; border: 1px solid #ddd;">{{ order_info[0].ngay_tao_don_hang }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Thông tin từng vé -->
+        <div style="margin-bottom: 30px;">
+            <h4>Chi Tiết Vé</h4>
+            {% for detail in order_info %}
+            <div style="margin-bottom: 20px;">
+                <h5 style="margin: 0;">Vé ID: {{ detail.ma_ve }}</h5>
+                <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse; margin-top: 10px;">
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Hãng Hàng Không</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.hang_may_bay }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Sân Bay Đi</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.san_bay_di }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Sân Bay Đến</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.san_bay_den }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Thời Gian Khởi Hành</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.thoi_gian_di }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Thời Gian Đến</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.thoi_gian_den }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Loại Hành Lý</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.hanh_ly_loai or '--' }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; padding: 8px; border: 1px solid #ddd;">Phí Hành Lý</th>
+                        <td style="padding: 8px; border: 1px solid #ddd;">{{ detail.hanh_ly_chi_phi or '--' }} VND</td>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Phần cuối -->
+        <div style="text-align: center; margin-top: 30px;">
+            <p style="color: #555;">Nếu quý khách có bất kỳ câu hỏi nào, xin vui lòng liên hệ với bộ phận hỗ trợ khách hàng.</p>
+            <p style="color: #555;">Cảm ơn quý khách đã sử dụng dịch vụ của chúng tôi!</p>
+        </div>
+    </div>
+</body>
+</html>

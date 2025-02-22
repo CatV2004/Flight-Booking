@@ -1,0 +1,355 @@
+<style>
+    /* Cải thiện thiết kế của modal */
+    .modal-content {
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-out;
+    }
+
+    .modal-dialog {
+      max-width: 500px;
+    }
+
+    .modal-header {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    /* Định dạng cho input */
+    #discountCode {
+      font-size: 0.7rem;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    /* Nút tìm kiếm */
+    .btn-info {
+      background-color: #017C8D;
+      color: white;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-info:hover {
+      background-color: #016767;
+    }
+
+    /* Thiết kế cho alert */
+    .alert-info {
+      background-color: #e9f7fa;
+      border-radius: 8px;
+      padding: 7px 12px!important;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .alert-info strong {
+      font-weight: 700;
+    }
+
+    /* Thêm hiệu ứng cho modal */
+    .modal.fade .modal-dialog {
+      transform: translate(0, -100px);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .modal.show .modal-dialog {
+      transform: translate(0, 0);
+    }
+
+
+    /* Tạo hiệu ứng khi hover vào mã khuyến mãi */
+    .clickable-discount {
+        cursor: pointer;
+        transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt mà */
+    }
+
+    .clickable-discount:hover {
+        background-color: #17a2b8; /* Thay đổi màu nền khi hover */
+        color: white; /* Thay đổi màu chữ */
+        transform: scale(1.02); /* Phóng to nhẹ */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    }
+
+    .clickable-discount:hover strong {
+        color: #fff; /* Đổi màu chữ của strong */
+    }
+
+    .selected-discount {
+        border: 2px solid #42a5f5 !important; /* Viền xanh dương đậm */
+        background-color: #17a2b8; /* Thay đổi màu nền khi hover */
+        color: white; /* Thay đổi màu chữ */
+        transform: scale(1.02); /* Phóng to nhẹ */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+</style>
+<!-- Modal -->
+<div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="discountModalLabel">Thêm giám giá</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="flex-column">
+                        <div class="d-flex row">
+                            <label for="discountCode" class="form-label">Nhập mã giảm</label>
+                            <div class="mb-3 col-md-9">
+                                <input type="text" class="form-control" id="discountCode"
+                                       placeholder="Nhập mã giảm giá">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" id="searchDiscount" class="btn btn-info w-100">Tìm kiếm</button>
+                            </div>
+                        </div>
+                        <div id="discountResult" class="mt-4">
+                            <!-- Nội dung sẽ được cập nhật ở đây -->
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="applyDiscount" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+<script>
+    let price_start
+
+
+
+
+    let selectedDiscount = null; // Lưu mã khuyến mãi đang được chọn
+
+    // Tìm kiếm mã khuyến mãi
+    document.querySelector('#searchDiscount').addEventListener('click', function() {
+        const discountCode = document.querySelector('#discountCode').value.trim();
+
+        if (!discountCode) {
+            alert('Vui lòng nhập mã giảm giá!');
+            return;
+        }
+
+        fetch('/search-discount', {  // Route này tìm kiếm mã khuyến mãi
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: discountCode })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const resultContainer = document.querySelector('#discountResult');
+
+            if (data.status === 'success') {
+                resultContainer.innerHTML = '';  // Clear previous results
+                data.discounts.forEach(discount => {
+                    resultContainer.innerHTML += `
+                        <div class="alert alert-info d-flex justify-content-between clickable-discount"
+                             role="alert" style="cursor: pointer;"
+                             onclick="selectDiscount(this, '${discount.discount_code}')"
+                             data-code="${discount.discount_code}"
+                             data-value="${discount.discount_percentage}"
+                             data-start-date="${discount.start_date}"
+                             data-end-date="${discount.end_date}">
+                            <div class="flex-column">
+                                <div class="d-flex">
+                                    <strong class = "dis-code">${discount.discount_code}</strong>
+                                </div>
+                                <div class="d-flex">
+                                    Giảm ${discount.discount_percentage * 100}% giá vé
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-end">
+                                <small>${discount.start_date} - ${discount.end_date}</small>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                resultContainer.innerHTML = `
+                    <div class="alert alert-danger" role="alert">
+                        ${data.message}
+                    </div>
+                `;
+            }
+        })
+        .catch(error => console.error('Lỗi:', error));
+    });
+
+
+    function selectDiscount(element, discountCode) {
+        // Bỏ chọn mã khuyến mãi cũ nếu có
+        if (selectedDiscount) {
+            selectedDiscount.classList.remove('selected-discount');
+        }
+
+        // Nếu nhấn vào mã đã chọn, hủy chọn
+        if (selectedDiscount === element) {
+            selectedDiscount = null; // Không chọn mã nào
+            document.querySelector('.discount-section').classList.add('d-none');
+            document.querySelector('.info-discount').classList.add('d-none'); // Ẩn phần thông tin khuyến mãi
+
+            document.querySelector('.total-price').textContent = price_start.toLocaleString() + ' VND';
+
+        } else {
+            // Chọn mã mới
+            element.classList.add('selected-discount');
+            selectedDiscount = element;
+
+            // Lấy thông tin từ mã giảm giá đã chọn
+            const discountData = element.dataset; // Lấy dữ liệu từ thuộc tính data-* trong HTML
+            updateTotalCost(discountData); // Cập nhật tổng chi phí sau khi chọn mã giảm giá
+
+            // Tính giá trị giảm theo tổng giá tiền
+            let total = 0;
+            document.querySelectorAll('.cost-start').forEach(function(item) {
+                let costValue = item.textContent.trim();
+                costValue = costValue.replace(/[^\d.-]/g, ''); // Xóa ký tự không phải số
+                costValue = parseFloat(costValue); // Chuyển đổi thành số thực
+                if (!isNaN(costValue)) {
+                    total += costValue;
+                }
+            });
+            const discountValue = discountData.value * total;
+
+            // Cập nhật thông tin vào phần discount-section
+            const discountSection = document.querySelector('.discount-section');
+            discountSection.querySelector('span:first-child').textContent = discountData.code;  // Mã giảm giá
+            discountSection.querySelector('span:last-child').textContent = `-${discountValue.toLocaleString()} VND`;  // Giá trị giảm
+            discountSection.querySelector('.text-muted').textContent = `${discountData.startDate} - ${discountData.endDate}`;  // Ngày bắt đầu và kết thúc
+
+            // Hiển thị phần discount-section
+            discountSection.classList.remove('d-none');
+
+            // Cập nhật thông tin vào phần info-discount
+            const infoDiscount = document.querySelector('.info-discount');
+            infoDiscount.querySelector('.reduce-code').textContent = discountData.code;  // Mã giảm giá
+            infoDiscount.querySelector('.reduce-price').textContent = `-${discountValue.toLocaleString()} VND`;  // Giá trị giảm
+
+            // Hiển thị phần info-discount
+            infoDiscount.classList.remove('d-none');
+        }
+    }
+
+    // Hàm tính tổng giá trị ban đầu (trước khi áp dụng mã giảm giá)
+    function calculateInitialTotalCost() {
+        let totalCost = 0;
+
+        // Lặp qua tất cả các phần tử có class 'cost' và cộng dồn giá trị
+        document.querySelectorAll('.cost').forEach(function(item) {
+            let costValue = item.textContent.trim();
+            costValue = costValue.replace(/[^\d.-]/g, ''); // Xóa tất cả các ký tự không phải là số
+            costValue = parseFloat(costValue); // Chuyển đổi thành kiểu số thực
+
+            if (!isNaN(costValue)) {
+                totalCost += costValue;
+            }
+        });
+
+        return totalCost; // Trả về tổng giá trị ban đầu
+    }
+
+
+    function updateTotalCost(discountData = null) {
+        // Lấy tổng chi phí ban đầu từ hàm calculateInitialTotalCost
+        let totalCost = calculateInitialTotalCost();
+
+        // Nếu có mã giảm giá, áp dụng giảm giá vào tổng chi phí
+        if (discountData) {
+            totalCost -= discountData.value * price_start;
+        }
+
+        // Cập nhật tổng giá hiển thị
+        document.querySelector('.total-price').textContent = totalCost.toLocaleString() + ' VND';
+    }
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        function calculateTotalCostStart() {
+            let totalCost = 0;
+
+            // Lấy tất cả các phần tử có class 'cost-start'
+            document.querySelectorAll('.cost-start').forEach(function(item) {
+                let costValue = item.textContent.trim();
+                costValue = costValue.replace(/[^\d.-]/g, ''); // Loại bỏ ký tự không phải số
+                costValue = parseFloat(costValue); // Chuyển thành số float
+
+                if (!isNaN(costValue)) {
+                    totalCost += costValue; // Cộng dồn vào tổng chi phí
+                }
+            });
+
+            return totalCost;
+
+        }
+
+        price_start = calculateTotalCostStart()
+        console.log(price_start);
+
+        // Gán giá trị discountCode là 'none' ngay khi trang được tải
+        let discountCode = 'none';
+
+        // Gửi mã giảm giá mặc định lên server khi trang được tải
+        fetch('/apply-discount', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: discountCode })  // Gửi "none" ngay khi tải trang
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Mã giảm giá mặc định đã được áp dụng.');
+            } else {
+                console.log('Có lỗi xảy ra: ' + data.message);
+            }
+        })
+        .catch(error => console.error('Lỗi:', error));
+
+        // Gửi mã khuyến mãi được chọn lên server khi nhấn OK
+        document.querySelector('#applyDiscount').addEventListener('click', function() {
+            // Nếu có mã giảm giá được chọn, lấy mã đó
+            if (selectedDiscount) {
+                discountCode = selectedDiscount.querySelector('.dis-code').textContent;
+            }
+
+            // Gửi thông tin mã giảm giá lên server
+            fetch('/apply-discount', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: discountCode })  // Gửi mã đã chọn nếu có
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    $('#discountModal').modal('hide');
+                } else {
+                    alert('Có lỗi xảy ra: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Lỗi:', error));
+        });
+    });
+
+
+
+
+
+
+
+
+
+</script>

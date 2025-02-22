@@ -1,0 +1,197 @@
+{% extends 'Employees/layout/base.html' %}
+
+{% block content %}
+<body>
+<img src="https://img.thuthuatphanmem.vn/uploads/2018/10/11/hinh-anh-may-bay-viet-nam-dep_041753785.jpg"
+     alt="Anh máy bay" class="image">
+{%if 'info' in session%}
+<div class="container p-5 my-5 bg-secondary text-white"
+     style="margin-top: 1rem !important; margin-bottom: -9rem !important; width: 50% !important; border-radius: 5px !important; position: relative; min-height: 120px !important;">
+    <div style="position: absolute; top: 3px; left: 10px;">
+        <h5>{{session['info']['noi_di']}} -> {{session['info']['noi_den'] }}</h5>
+    </div>
+    <div style="position: absolute; top: 50px; left: 10px;">
+        <h6>{{session['info']['ngay_di']}} | {{session['info']['so_luong_hanh_khach']}} | {{session['info']['hang_ve']}}
+            | {{"Một chiều" if session['info']['loai_ve'] == "Một Chiều" else "Lượt đi"}}</h6>
+    </div>
+    <div class="edit-flight"
+         style="position: absolute; bottom: 10px; right: 10px; background-color: hotpink; height: 40px !important; width: 100px; border-radius: 5px; display: flex; justify-content: center; align-items: center">
+        <a href="/page/sellticket">Chỉnh sửa</a>
+    </div>
+</div>
+{%endif%}
+<div style="position: absolute; top: 50%; left: 46%">
+    <a href="/page/chooseticket" class="btn btn-info" id="search-flight">Tìm Chuyến</a>
+</div>
+<form method="post" action="/page/chooseticket">
+    <div class="d-flex align-items-center justify-content-center min-vh-100" style="margin-top: 200px !important;">
+        <div class="container text-center ticket" style="margin-left: -50px; padding-top: 80px">
+            <div class="container-fluid mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2 bg-primary text-white"
+                             style="background-color: navajowhite !important; border-radius: 10px !important; height: 350px !important;">
+                            <div class="container mt-3">
+                                <h4 style="margin-bottom: 0 !important;">Thao tác vé</h4>
+                                <div class="list-group">
+                                    <a href="/page/sellticket"
+                                       class="list-group-item list-group-item-action bg-primary"><i
+                                            class="fas fa-ticket-alt"></i>Bán vé</a>
+                                    <a href="/page/changeticket" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-exchange-alt"></i>Đổi vé</a>
+                                    <a href="/page/cancelticket" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-ban"></i>Hủy
+                                        vé</a>
+                                    <a href="/page/printticket" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-print"></i>Xuất
+                                        vé</a>
+                                    <a href="#" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-arrow-left"></i>Quay lại</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10 text-white">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="booking-form d-inline-flex">
+                                        <form method="post" action="/page/chooseticket" class="px-3"
+                                              style="width: 170px">
+                                            <div class="d-flex flex-column align-items-start gap-5"
+                                                 style="padding-bottom:20px; width: 17% !important;">
+                                                <!-- Stop -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                                            id="oneWayDropdown"
+                                                            data-bs-toggle="dropdown" aria-expanded="false"
+                                                            style="width: 155px !important;">
+                                                        <i class="bi bi-geo-alt-fill icon-geo"
+                                                           style="margin-right: 3px;"></i><span
+                                                            class="icon stop-point">Số điểm dừng</span>
+                                                    </button>
+                                                    <div class="dropdown-menu sell-ticket-dropdown">
+                                                        <button type="button" class="dropdown-item point-stop">Bay trực tiếp</button>
+                                                        <button type="button" class="dropdown-item point-stop">Một điểm dừng</button>
+                                                        <button type="button" class="dropdown-item point-stop">Hai điểm dừng</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Flight Time -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle d-flex align-items-center"
+                                                            type="button"
+                                                            id="passengerDropdown" data-bs-toggle="dropdown"
+                                                            aria-expanded="false" style="width: 155px !important;">
+                                                        <i class="bi bi-clock-fill icon-clock" style="margin-right: 5px;"></i><span
+                                                            class="icon flight-time">Thời gian bay</span>
+                                                    </button>
+                                                    <div class="dropdown-menu sell-ticket-dropdown">
+                                                        <button type="button" class="dropdown-item time-flight">Chuyến Bay Sáng</button>
+                                                        <button type="button" class="dropdown-item time-flight">Chuyến Bay Chiều</button>
+                                                        <button type="button" class="dropdown-item time-flight">Chuyến Bay Tối</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Airline -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                                            id="classDropdown" style="width: 155px !important;"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bi bi-airplane-fill icon-airplane"
+                                                           style="margin-right: 5px;"></i><span
+                                                            class="icon airlines">Hãng Bay</span>
+                                                    </button>
+                                                    <div class="dropdown-menu sell-ticket-dropdown">
+                                                        {%for airline in airlines%}
+                                                        <button type="button" class="dropdown-item aircraft-company">{{airline.ten_hang}}</button>
+                                                        {%endfor%}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form method="post" action="/page/chooseticket" style="width: 50rem">
+                                            <!-- Flight -->
+                                            <div id="flights" class="d-flex flex-column m-4" style="margin-top: 0 !important;">
+                                                {%if flights|length == 0%}
+                                                <div style="background-color: deepskyblue">
+                                                    <p>Không có chuyến nào phù hợp</p>
+                                                </div>
+                                                {%else%}
+                                                {%for i in flights%}
+                                                <div class="container p-5 my-3 bg-light bg-gradient text-dark"
+                                                     style="width: 100%; border-radius: 5px; font-family: Arial, sans-serif; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); position: relative">
+                                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                        <!-- Thông tin hãng bay -->
+                                                        <div style="flex: 2;">
+                                                            <div style="font-weight: bold; color: #333; position: absolute; top: 3px; left: 15px; font-size: 18px">
+                                                                {{i.ten_hang}}
+                                                            </div>
+                                                            <div style="margin-top: 0; text-align: center; display: flex; align-items: center; gap: 20px; width: 300px; margin-left: 150px">
+                                                                <div class="d-flex flex-column align-items-center"
+                                                                     style="width: 70px; margin-right: 10px">
+                                                                    <div style="width: 100px; margin-right: 10px">
+                                                                        <p style="margin-bottom: 2px;">
+                                                                            {{i.noi_di}}</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="font-bold"
+                                                                              style="font-weight: bold;">{{i.thoi_gian_di.strftime('%H:%M')}}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- điểm dừng -->
+                                                                <div class="d-flex flex-column align-items-center"
+                                                                     style="width: 120px">
+                                                                    <p class="text-muted mb-2"
+                                                                       style="margin-top: -11px">
+                                                                        {{i.diem_dung}} điểm dừng</p>
+                                                                    <!-- Mũi tên -->
+                                                                    <div class="arrow-c ontainer d-flex align-items-center"
+                                                                         style="display: flex; align-items: center; position: absolute">
+                                                                    <span class="dot"
+                                                                          style="height: 8px; width: 8px; background-color: gray; border-radius: 50%;"></span>
+                                                                        <div class="line"
+                                                                             style=" flex-grow: 2; height: 2px; background-color: gray; margin: 0; width: 80px;"></div>
+                                                                        <div style="font-size: 19px; color: gray; margin-left: -15px; margin-top: -4px">
+                                                                            &rarr;
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex flex-column align-items-center"
+                                                                     style="width: 70px; margin-left: 10px">
+                                                                    <div style="width: 100px; margin-right: 10px">
+                                                                        <p style="margin-bottom: 2px;">
+                                                                            {{i.noi_den}}</p>
+                                                                    </div>
+                                                                    <div class="">
+                                                                        <span class="font-bold"
+                                                                              style="font-weight: bold;">{{i.thoi_gian_den.strftime('%H:%M')}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div style="position: absolute; bottom: 3px; left: 15px; ">
+                                                            <div style="margin-top: 5px;">Giá tiền: <span
+                                                                    style="font-weight: bold; color: #d9534f; font-size: 18px">{{ "{:,.0f}".format(i.gia_ghe) }} VND</span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Nút lựa chọn -->
+                                                        <div style="flex: 1; text-align: right;">
+                                                            <button type="submit" name="flight" value="{{i}}" style="background-color: #d9534f; color: white; border:none; border-radius: 5px; padding: 10px 20px; font-weight:bold; cursor: pointer; position: absolute; bottom: 10px;right: 20px;">Lựa chọn</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {%endfor%}
+                                                {%endif%}
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+{% endblock %}

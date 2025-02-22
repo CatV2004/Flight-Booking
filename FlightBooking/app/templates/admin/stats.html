@@ -1,0 +1,485 @@
+{% extends 'admin/base.html' %}
+
+
+{% block body %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 2rem;
+    }
+
+    .container {
+        max-width: 1600px !important;
+        padding: 15px;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-radius: 8px;
+        overflow: hidden;
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    table:hover {
+        transform: scale(1.01);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    th {
+        background-color: #4caf50; /* Màu xanh lá đậm */
+        color: white;
+        text-align: center;
+        padding: 14px;
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    th:hover {
+        background-color: #45a049;
+        transform: scale(1.05); /* Tăng kích thước nhẹ */
+    }
+
+    th.selected {
+        background-color: #ffa726; /* Màu cam nhạt */
+        color: white;
+        box-shadow: 0 0 10px rgba(255, 165, 38, 0.7); /* Hiệu ứng ánh sáng */
+    }
+
+    td {
+        text-align: center;
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    table tbody tr:hover {
+        background-color: #f2f2f2;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .thead-dark th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .col-md-5, .col-md-7 {
+        margin-top: 20px;
+    }
+
+    label {
+        font-size: 1rem;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+
+    input[type="radio"] {
+        margin-right: 8px;
+        cursor: pointer;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    /* Hiệu ứng mượt */
+    * {
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Giao diện responsive */
+    @media (max-width: 768px) {
+        .col-md-7, .col-md-5 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        th, td {
+            font-size: 0.8rem;
+        }
+
+        label {
+            font-size: 0.9rem;
+        }
+    }
+
+    #myChart, #myChart-2 {
+        border: 2px solid #4caf50; /* Viền xanh lá */
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #ffffff; /* Nền trắng */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    }
+
+    #myChart:hover, #myChart-2:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .radio-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+        gap: 20px;
+    }
+
+    .radio-container label {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #343a40; /* Màu chữ */
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .radio-container label:hover {
+        color: #4caf50; /* Đổi màu chữ khi hover */
+    }
+
+    .radio-container input[type="radio"] {
+        appearance: none; /* Ẩn radio mặc định */
+        width: 16px;
+        height: 16px;
+        border: 2px solid #4caf50;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        margin-right: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .radio-container input[type="radio"]:checked {
+        background-color: #4caf50; /* Màu nền khi được chọn */
+        border-color: #4caf50;
+    }
+
+    .radio-container input[type="radio"]:hover {
+        background-color: rgba(76, 175, 80, 0.1); /* Nền xanh nhạt */
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #monthSelect, #yearSelect, #yearSelect-2 {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    #monthSelect:hover, #yearSelect:hover, #yearSelect-2:hover {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    #monthSelect:focus, #yearSelect:focus, #yearSelect-2:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
+    }
+
+    label {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .header-container {
+        background: linear-gradient(to right, rgba(241, 176, 183, 0.3), rgba(241, 176, 183, 1), rgba(241, 176, 183, 0.3));
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    }
+
+    /* CSS cho div bao quanh h2 */
+    .subheader-container {
+        background: linear-gradient(to right, rgba(169, 215, 228, 0.3), rgba(169, 215, 228, 1), rgba(169, 215, 228, 0.3));
+        padding: 5px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    }
+</style>
+<div class="header-container">
+    <h1 class="text-center text-danger my-2">THỐNG KÊ BÁO CÁO</h1>
+</div>
+<div class="flex-column">
+
+    <div class="subheader-container mt-5">
+        <h2 class="text-center my-2">Báo cáo thống kê doanh thu theo tuyến bay</h2>
+    </div>
+
+    <div class="flex-column">
+        <div class="d-flex justify-content-between">
+
+            <div class="d-flex">
+                <div>
+                    <label for="monthSelect" class="me-2">Tháng:</label>
+                    <select id="monthSelect" class="form-select me-3" style="width: 100px;" onchange="filterData()">
+                        <option value="">Tất cả</option>
+                        {% for month in range(1, 13) %}
+                        <option value="{{ month }}">{{ month }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="yearSelect" class="me-2">Năm:</label>
+                    <select id="yearSelect" class="form-select" style="width: 120px;" onchange="filterData()">
+                        <option value="">Tất cả</option>
+                        {% for year in range(2020, 2031) %}
+                        <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex">
+                <label>
+                    <input type="radio" name="chartType" value="bar" checked onchange="updateChart()"> Biểu đồ cột
+                </label>
+                <label>
+                    <input type="radio" name="chartType" value="pie" onchange="updateChart()"> Biểu đồ tròn
+                </label>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-7 col-12">
+
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Mã tuyến bay</th>
+                        <th>Tuyến bay <br> (Nơi đi - Nơi đến)</th>
+                        <th onclick="updateData(2)">Tổng tiền vé (VND)</th>
+                        <th onclick="updateData(3)">Tổng tiền hành lý (VND)</th>
+                        <th onclick="updateData(4)">Tổng tiền giảm giá (VND)</th>
+                        <th onclick="updateData(5)">Tổng doanh thu (VND)</th>
+                    </tr>
+                    </thead>
+                    <tbody id="statsTableBody">
+                    {% if not stats %}
+                    <tr>
+                        <td colspan="6" class="text-center">Không có dữ liệu cho lựa chọn này.</td>
+                    </tr>
+                    {% else %}
+                    {% for s in stats %}
+                    <tr>
+                        <td>{{ s[0] }}</td>
+                        <td>{{ s[1] }}</td>
+                        <td>{{ "{:,.0f}".format(s[2]) }}</td>
+                        <td>{{ "{:,.0f}".format(s[3]) }}</td>
+                        <td>{{ "{:,.0f}".format(s[4]) }}</td>
+                        <td>{{ "{:,.0f}".format(s[5]) }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="col-md-5 col-12 mt-0">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    {% include 'admin/vola.html' %}
+    {% include 'admin/airline_chart.html' %}
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    let fareTables = [];
+    let columnData = [[], [], [], []]; // Dữ liệu cho các cột: tổng tiền vé, hành lý, giảm giá, doanh thu
+    let selectedColumn = 5; // Cột mặc định là Tổng tiền vé (index 2)
+
+    {% for s in stats %}
+        fareTables.push("{{ s[0] }}");
+        columnData[0].push({{ s[2] }}); // Tổng tiền vé
+        columnData[1].push({{ s[3] }}); // Tổng tiền hành lý
+        columnData[2].push({{ s[4] }}); // Tổng tiền giảm giá
+        columnData[3].push({{ s[5] }}); // Tổng doanh thu
+    {% endfor %}
+
+    let chartInstance;
+
+    function createChart(type) {
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        // Nhãn biểu đồ theo cột được chọn
+        const columnLabels = [
+            "Tổng tiền vé (VND)",
+            "Tổng tiền hành lý (VND)",
+            "Tổng tiền giảm giá (VND)",
+            "Tổng doanh thu (VND)"
+        ];
+
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+
+        chartInstance = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: fareTables,
+                datasets: [{
+                    label: columnLabels[selectedColumn - 2],
+                    data: columnData[selectedColumn - 2],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function updateChart() {
+        const chartType = document.querySelector('input[name="chartType"]:checked').value;
+        createChart(chartType);
+    }
+
+    function updateData(columnIndex) {
+        selectedColumn = columnIndex;
+
+        const headers = document.querySelectorAll('th');
+        headers.forEach(header => header.classList.remove('selected'));
+
+        headers[columnIndex].classList.add('selected');
+
+
+        updateChart();
+    }
+
+    window.onload = function () {
+        createChart('bar');
+        createChart2('line');
+    };
+
+    function updateChartData(data) {
+        fareTables = data.map(item => item.route_id); // Lấy danh sách mã tuyến
+        columnData[0] = data.map(item => item.total_fare);
+        columnData[1] = data.map(item => item.total_baggage);
+        columnData[2] = data.map(item => item.total_discount);
+        columnData[3] = data.map(item => item.total_revenue);
+
+        // Cập nhật lại biểu đồ
+        updateChart();
+    }
+
+    function updateTable(data) {
+        const tableBody = document.getElementById('statsTableBody');
+        tableBody.innerHTML = '';
+
+        if (data.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center">Không có dữ liệu cho lựa chọn này.</td>
+                </tr>`;
+            return;
+        }
+
+        data.forEach(item => {
+            const row = `
+                <tr>
+                    <td>${item.route_id}</td>
+                    <td>${item.route_name}</td>
+                    <td>${item.total_fare.toLocaleString('vi-VN')}</td>
+                    <td>${item.total_baggage.toLocaleString('vi-VN')}</td>
+                    <td>${item.total_discount.toLocaleString('vi-VN')}</td>
+                    <td>${item.total_revenue.toLocaleString('vi-VN')}</td>
+                </tr>`;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    function filterData() {
+        const month = document.getElementById('monthSelect').value; // Lấy giá trị tháng
+        const year = document.getElementById('yearSelect').value;   // Lấy giá trị năm
+
+        // Gửi yêu cầu AJAX đến server
+        fetch(`/filter?month=${month}&year=${year}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse JSON từ server
+            })
+            .then(data => {
+                // Cập nhật bảng và biểu đồ
+                updateTable(data);
+                updateChartData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                alert('Không thể tải dữ liệu. Vui lòng thử lại sau.');
+            });
+    }
+
+
+</script>
+
+
+{% endblock %}

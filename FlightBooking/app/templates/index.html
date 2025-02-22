@@ -1,0 +1,509 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<body>
+<div id="booking" class="section ">
+    <div class="section-center">
+        <div class="container">
+            <div class="row">
+                <div class="booking-form">
+                    <form class="px-5">
+                        <div aria-level="1" class="container-fluid text-white text-center pt-3 pb-5">
+                            <h4 class="display-6 fw-bold">Từ Đông Nam Á Đến Vũ Trụ, Trong Tầm Tay Bạn</h4>
+                        </div>
+
+                        <div class="row d-flex align-items-center">
+                            <!-- Autocomplete "Từ" -->
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="from" class="form-label">Sân bay đi</label>
+                                    <div class="dropdown-container">
+                                        <div class="dropdown-content">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" data-id="IcFlightTakeOff">
+                                                <path d="M3 21H21" stroke="#03121A" stroke-width="2"
+                                                      stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                      d="M12 9L15.1924 7.93585C17.317 7.22767 19.6563 7.95843 21 9.75L7.44513 14.0629C5.86627 14.5653 4.1791 13.6926 3.67674 12.1137C3.66772 12.0854 3.65912 12.0569 3.65094 12.0283L3 9.75L5.25 10.875L9 9.75L4.5 3H5.25L12 9Z"
+                                                      stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                            </svg>
+                                            <input class="form-control" id="from" name="from" list="from-options"
+                                                   placeholder="Nhập sân bay đi" oninput="filterAirports('from', 'to')"
+                                                   required>
+                                        </div>
+                                        <div class="dropdown-list" id="from-options" style="display: none;">
+                                            <!-- Options will be populated dynamically via JavaScript -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Button to swap values -->
+                            <div class="col-md-2 text-center">
+                                <button type="button" class="btn btn-outline-primary" onclick="swapValues()">
+                                    <i class="bi bi-arrow-left-right fs-4"></i>
+                                </button>
+                            </div>
+
+                            <!-- Autocomplete "Đến" -->
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="to" class="form-label">Sân bay đến</label>
+                                    <div class="dropdown-container">
+                                        <div class="dropdown-content">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                                 xmlns="http://www.w3.org/2000/svg" data-id="IcFlightTakeOff">
+                                                <path d="M3 21H21" stroke="#03121A" stroke-width="2"
+                                                      stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                      d="M12 9L15.1924 7.93585C17.317 7.22767 19.6563 7.95843 21 9.75L7.44513 14.0629C5.86627 14.5653 4.1791 13.6926 3.67674 12.1137C3.66772 12.0854 3.65912 12.0569 3.65094 12.0283L3 9.75L5.25 10.875L9 9.75L4.5 3H5.25L12 9Z"
+                                                      stroke="#687176" stroke-width="2" stroke-linecap="round"
+                                                      stroke-linejoin="round"></path>
+                                            </svg>
+                                            <input class="form-control" id="to" name="to" list="to-options"
+                                                   placeholder="Nhập sân bay đến" oninput="filterAirports('to', 'from')"
+                                                   required>
+                                        </div>
+                                        <div class="dropdown-list" id="to-options" style="display: none;">
+                                            <!-- Options will be populated dynamically via JavaScript -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-3 mt-3">
+                                <div class="form-group">
+                                    <span class="form-label">Ngày đi</span>
+                                    <input class="form-control" id="departure_date" type="date" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 mt-3">
+                                <div class="form-group d-flex align-items-center m-0"
+                                     style="padding-left: 20px; height: 22px">
+                                    <input type="checkbox" id="roundTripToggle" class="me-2">
+                                    <label for="roundTripToggle" class="form-label mb-0">Khứ hồi</label>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input class="form-control" type="date" id="returnDate" disabled
+                                           style="color: #6c757d;">
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mt-3">
+                                <div class="form-group">
+                                    <span class="form-label">Hạng ghế</span>
+                                    <select class="form-control" id="seatClass">
+                                        <option value="1">Phổ thông</option>
+                                        <option value="2">Thương gia</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mt-3">
+                                <div class="form-group text-center">
+                                    <span class="form-label">Số lượng vé</span>
+                                    <div class="input-group d-flex justify-content-center align-items-center">
+                                        <button class="btn btn-outline-primary rounded" type="button" id="decreaseBtn">
+                                            -
+                                        </button>
+                                        <input id="ticketQuantity" type="text" class="form-control text-center mx-2"
+                                               value="1"
+                                               style="width: 50px; border-radius: 30px !important;" readonly>
+                                        <button class="btn btn-outline-primary rounded" type="button" id="increaseBtn">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mt-3">
+                                <div class="form-btn">
+                                    <button class="btn btn-lg d-flex align-items-center justify-content-center"
+                                            id="btnSearch"
+                                            style="width: 150px; height: 53px; border-radius: 16px; border: 1px solid #e7e7e7; color: #e7e7e7">
+                                        Tìm kiếm
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid container-fluid-template">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>About Company Page</h2><br>
+            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</h4><br>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                ut aliquip ex ea commodo consequat.</p>
+            <br>
+            <button class="btn btn-default btn-lg">Get in Touch</button>
+        </div>
+        <div class="col-sm-4">
+      <span class="glyphicon glyphicon-signal logo">
+          <img src="https://res.cloudinary.com/dohsfqs6d/image/upload/v1731602594/fly_yoymnp.png" width="100%"
+               alt="LOGO Group">
+      </span>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid container-fluid-template bg-grey">
+    <div class="row">
+        <div class="col-sm-4">
+      <span class="glyphicon glyphicon-globe logo slideanim">
+          <img src="https://res.cloudinary.com/dohsfqs6d/image/upload/v1731575203/samples/balloons.jpg" width="100%"
+               class="rounded-circle" alt="Ưu đãi ">
+      </span>
+        </div>
+        <div class="col-sm-8">
+            <h2>Our Values</h2><br>
+            <h4><strong>MISSION:</strong> Our mission lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+            <p><strong>VISION:</strong> Our vision Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Container (Services Section) -->
+<div id="services" class="container-fluid container-fluid-template text-center">
+    <h2>Dịch vụ</h2>
+    <h5><i>"Phục vụ tận tình - tận tâm - chu đáo"</i></h5>
+    <br>
+    <div class="row slideanim">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-off logo-small"></span>
+            <h4>Đặt vé online</h4>
+            <p>Hỗ trợ khách hàng 24/24</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-heart logo-small"></span>
+            <h4>Chăm sóc khách hàng</h4>
+            <p>Hỗ trợ khách hàng 24/24</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-lock logo-small"></span>
+            <h4>Chương trình khuyến mãi</h4>
+            <p>Cập nhật chương trình 24/24</p>
+        </div>
+    </div>
+    <br><br>
+    <div class="row slideanim">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-leaf logo-small"></span>
+            <h4>GREEN</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-certificate logo-small"></span>
+            <h4>CERTIFIED</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-wrench logo-small"></span>
+            <h4 style="color:#303030;">HARD WORK</h4>
+            <p>Lorem ipsum dolor sit amet..</p>
+        </div>
+    </div>
+</div>
+
+<!-- Container (Portfolio Section) -->
+<div id="portfolio" class="container-fluid container-fluid-template text-center bg-grey">
+    <!-- Portfolio Section -->
+    <div class="container text-center my-5">
+        <h2>Bạn muốn tìm chuyến đi?</h2>
+        <h5>Xung quanh bạn có rất nhiều địa điểm thú vị</h5>
+        <div class="row text-center mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://res.cloudinary.com/dohsfqs6d/image/upload/v1731677168/du-lich-ho-chi-minh-cung-flane-1024x576_k6cps8.jpg"
+                         alt="Paris" class="card-img-top" style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>TP. Hồ Chí Minh</strong></h5>
+                        <p class="card-text">Thành phố hóa lệ</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://res.cloudinary.com/dohsfqs6d/image/upload/v1731677128/dia-diem-du-lich-o-ha-noi-1_n66g6b.jpg"
+                         alt="New York" class="card-img-top"
+                         style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Hà Nội</strong></h5>
+                        <p class="card-text">Thủ đô đất nước Việt Nam</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://res.cloudinary.com/dohsfqs6d/image/upload/v1731677106/cauvang-1654247842-9403-1654247849_hvmcf2.jpg"
+                         alt="San Francisco" class="card-img-top"
+                         style="height: 300px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Đà Nẵng</strong></h5>
+                        <p class="card-text">Thành phố du lịch</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <h2>Khách hàng nói gì về chúng tôi?</h2>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            {% for comment, fname, lname in comments %}
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ loop.index0 }}"
+                    class="{% if loop.first %}active{% endif %}" aria-label="Slide {{ loop.index }}"></button>
+            {% endfor %}
+        </div>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" id="comments-list">
+            {% for comment, fname, lname in comments %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <h4>"{{ comment.noi_dung }}"<br>
+                    <span>
+                        {% if fname and lname %}
+                            {{ fname }} {{ lname }}
+                        {% else %}
+                            Khách ẩn danh
+                        {% endif %}
+                        - <em class="date" data-time="{{ comment.thoi_gian }}">{{ comment.thoi_gian }}</em>
+                    </span>
+                </h4>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        <!-- Left and right controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+</div>
+
+<!-- Container (Pricing Section) -->
+<div id="pricing" class="container-fluid container-fluid-template">
+    <div class="text-center">
+        <h2>Pricing</h2>
+        <h4>Choose a payment plan that works for you</h4>
+    </div>
+    <div class="row slideanim">
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Basic</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>20</strong> Lorem</p>
+                    <p><strong>15</strong> Ipsum</p>
+                    <p><strong>5</strong> Dolor</p>
+                    <p><strong>2</strong> Sit</p>
+                    <p><strong>Endless</strong> Amet</p>
+                </div>
+                <div class="panel-footer">
+                    <h3>$19</h3>
+                    <h4>per month</h4>
+                    <button class="btn btn-lg">Sign Up</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Pro</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>50</strong> Lorem</p>
+                    <p><strong>25</strong> Ipsum</p>
+                    <p><strong>10</strong> Dolor</p>
+                    <p><strong>5</strong> Sit</p>
+                    <p><strong>Endless</strong> Amet</p>
+                </div>
+                <div class="panel-footer">
+                    <h3>$29</h3>
+                    <h4>per month</h4>
+                    <button class="btn btn-lg">Sign Up</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>Premium</h1>
+                </div>
+                <div class="panel-body">
+                    <p><strong>100</strong> Lorem</p>
+                    <p><strong>50</strong> Ipsum</p>
+                    <p><strong>25</strong> Dolor</p>
+                    <p><strong>10</strong> Sit</p>
+                    <p><strong>Endless</strong> Amet</p>
+                </div>
+                <div class="panel-footer">
+                    <h3>$49</h3>
+                    <h4>per month</h4>
+                    <button class="btn btn-lg">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid container-fluid-template bg-grey">
+    <h2 class="text-center">Hãy nhận xét về chúng tôi</h2>
+    <div class="row">
+        <div class="col-sm-5">
+            <p>Hãy liên lạc với chúng tôi khi bạn thắc mắc.</p>
+            <p><span class="glyphicon glyphicon-map-marker"></span> Ho Chi Minh, Viet Nam</p>
+            <p><span class="glyphicon glyphicon-phone"></span> +88 327650566</p>
+            <p><span class="glyphicon glyphicon-envelope"></span>nguyenmanhc261@gmail.com</p>
+        </div>
+        <div class="col-sm-7 slideanim">
+            <textarea class="form-control" id="comments" name="comments" placeholder="Comment"
+                      rows="5"></textarea><br>
+            <div class="row">
+                <div class="col-sm-12 form-group">
+                    <button class="btn btn-default pull-right" onclick="addComment()">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    /* Nội dung bình luận */
+    .carousel-item {
+        min-height: 195px; /* Hoặc bất kỳ chiều cao phù hợp nào */
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Căn giữa nội dung */
+        position: relative;
+    }
+    .carousel-item h4 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;  /* Màu chữ cho nội dung bình luận */
+        margin-bottom: 10px;
+        line-height: 1.5;
+        font-style: italic;
+    }
+    .carousel-item span {
+        font-size: 14px;
+        color: #666;  /* Màu chữ cho tên tác giả */
+        font-weight: bold;
+        display: block;  /* Đảm bảo tên tác giả ở dưới */
+        margin-top: 8px;  /* Khoảng cách giữa nội dung và tên */
+    }
+    .carousel-item span {
+        color: #888;  /* Màu chữ nhạt cho "Khách ẩn danh" */
+    }
+    .carousel-item span.khach-an-danh {
+        font-style: italic;
+        color: #999;  /* Màu chữ cho "Khách ẩn danh" */
+    }
+</style>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+<script>
+    // Đặt ngôn ngữ là tiếng Việt
+    moment.locale('vi');
+
+    // Duyệt qua tất cả các thẻ có class 'date'
+    document.querySelectorAll('.date').forEach(function(element) {
+        // Lấy giá trị từ thuộc tính data-time
+        const originalTime = element.getAttribute('data-time');
+        if (originalTime) {
+            // Chuyển đổi thời gian sang định dạng "3 giờ trước", "2 ngày trước"
+            const relativeTime = moment(originalTime).fromNow();
+            // Cập nhật nội dung hiển thị
+            element.textContent = relativeTime;
+        }
+    });
+
+    function addComment() {
+        const content = document.getElementById("comments").value.trim();
+
+        if (!content) {
+            alert("Nội dung bình luận không được để trống!");
+            return;
+        }
+
+        fetch('/api/comments', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            // Thêm bình luận mới vào carousel
+            const commentsList = document.getElementById("comments-list");
+            const newComment = `
+                <div class="carousel-item">
+                    <h4>"${data.content}"<br>
+                        <span>
+                            ${data.fname && data.lname ? `${data.fname} ${data.lname}` : "Khách ẩn danh"}
+                            - <em class="date" data-time="${data.thoi_gian}">${moment(data.thoi_gian).fromNow()}</em>
+                        </span>
+                    </h4>
+                </div>
+            `;
+            commentsList.innerHTML += newComment;
+
+            // Reset textarea
+            document.getElementById("comments").value = "";
+        })
+        .catch((error) => {
+            console.error("Error adding comment:", error);
+            alert("Không thể gửi bình luận. Vui lòng thử lại.");
+        });
+    }
+
+</script>
+{% endblock %}

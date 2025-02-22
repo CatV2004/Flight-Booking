@@ -1,0 +1,165 @@
+{% extends 'Employees/layout/base.html' %}
+
+{% block content %}
+<body>
+<img src="https://img.thuthuatphanmem.vn/uploads/2018/10/11/hinh-anh-may-bay-viet-nam-dep_041753785.jpg"
+     alt="Anh máy bay" class="image">
+<div>
+    <div class="d-flex justify-content-center w-20" style="font-size: 20px; color: #ea4335; font-weight: bold">
+        <span>Các quy định khi lập lich</span>
+    </div>
+    <div class="d-flex justify-content-center aline-item-center" style="margin-top: 10px;">
+        <ol class="list-group list-group-numbered" style="width: 50%">
+            <li class="list-group-item">Thời gian bay tối thiểu của một chuyến bay là 30p.</li>
+            <li class="list-group-item">Trong một chuyến bay có tối đa là 2 sân bay trung gian.</li>
+            <li class="list-group-item">Thời gian dừng tại một sân bay trung gian chỉ từ 20-30 phút.</li>
+        </ol>
+    </div>
+</div>
+
+{% if err %}
+<div class="alert alert-danger mt-5" style="position: absolute; left: 115px;top:280px; width: 20%">{{err}}</div>
+{% endif %}
+<div class="container mt-5 rounded" style="background-color: darkgray; position: relative; height: 520px">
+    <div>
+        <h4 class="text-center fw-bold">Lập Lịch Chuyến Bay</h4>
+    </div>
+    <form method="post" action="/page/schedule">
+        <!-- Thông tin chuyến bay -->
+        <div class="row row-cols-2 ">
+            <div class="col-md-6">
+                <label for="departureAirport" class="form-label">Tuyến bay</label>
+                <select id="departureAirport" class="form-select" name="tuyen-bay">
+                    {%for i in flight_route%}
+                    <option>{{i.ma_tuyen_bay}} (Từ {{i.noi_di}} đến {{i.noi_den}})</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="departureAirport" class="form-label">Mã máy bay:</label>
+                <select class="form-select" name="ma-may-bay">
+                    {%for i in planes%}
+                    <option>{{i.so_hieu_mb}}</option>
+                    {%endfor%}
+                </select>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="flightDate" class="form-label">Ngày khởi hành:</label>
+                <label for="flightDate" class="form-label" style="position: absolute; left: 330px">Giờ khởi hành:</label>
+                <div class="d-flex">
+                    <input onchange="gia_tri_ngay_den()" type="date"
+                          min="{{time_now}}" id="ngay-di" class="form-control me-2" placeholder="12 December" name="ngay-di">
+                    <input id="timepicker" type="text" class="form-control" placeholder="hh:mm:ss" name="thoi-gian-di">
+                </div>
+            </div>
+            <div class="col-md-6 mt-2">
+                <label for="flightDate" class="form-label">Ngày đến:</label>
+                <label for="flightDate" class="form-label" style="position: absolute; right: 260px">Giờ đến:</label>
+                <div class="d-flex">
+                    <input onchange="gia_tri_thoi_gian_dung()" type="date" id="ngay-den"
+                          min="{{time_now}}"  class="form-control me-2" placeholder="12 December" name="ngay-den">
+                    <input type="text" class="form-control" placeholder="hh:mm:ss" name="thoi-gian-den">
+                </div>
+            </div>
+            <div class="col-md-6 mt-2">
+                <div class="d-flex gap-5">
+                    <div style="width: 150px">
+                        <label for="departureAirport" class="form-label">Số tiền hàng triệu</label>
+                        <select  class="form-select" name="so-tien-hang-trieu">
+                            {%for i in range(0, 10)%}
+                            <option>{{i}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div style="width: 150px">
+                        <label for="departureAirport" class="form-label">Số tiền hàng trăm</label>
+                        <select  class="form-select" name="so-tien-hang-tram">
+                            {%for i in range(0, 10)%}
+                            <option>{{i}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div style="width: 150px">
+                        <label for="departureAirport" class="form-label">Số tiền hàng chục</label>
+                        <select  class="form-select" name="so-tien-hang-chuc">
+                            {%for i in range(0, 10)%}
+                            <option>{{i}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Danh sách sân bay trung gian -->
+        <table class="table table-bordered border-dark mt-5">
+            <thead class="table-light">
+            <tr>
+                <th class="text-center">STT</th>
+                <th class="text-center">Sân bay trung gian</th>
+                <th class="text-center">Ngày dừng</th>
+                <th class="text-center">Giờ dừng</th>
+                <th class="text-center">Giờ tiếp tục</th>
+                <th class="text-center">Ghi chú</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="text-center">1</td>
+                <td>
+                    <select class="form-select" name="san-bay-tg-1">
+                        <option selected>Buôn Ma Thuột</option>
+                        {%for i in airports%}
+                        <option>{{i.ten_san_bay}}</option>
+                        {%endfor%}
+                    </select>
+                </td>
+                <td><input id="ngay-dung-1" type="date" class="form-control" name="ngay-dung-1"></td>
+                <td><input type="text" class="form-control" placeholder="hh:mm:ss" name="thoi-gian-dung-1"></td>
+                <td><input type="text" class="form-control" placeholder="hh:mm:ss" name="thoi-gian-tt-1"></td>
+                <td><input type="text" class="form-control" placeholder="Ghi Chú ..." name="ghi-chu-1"></td>
+            </tr>
+            <tr>
+                <td class="text-center">2</td>
+                <td>
+                    <select class="form-select" name="san-bay-tg-2">
+                        <option>Buôn Ma Thuột</option>
+                       {%for i in airports%}
+                        <option>{{i.ten_san_bay}}</option>
+                        {%endfor%}
+                    </select>
+                </td>
+                <td><input type="date" class="form-control" id="ngay-dung-2" name="ngay-dung-2"></td>
+                <td><input type="text" class="form-control" placeholder="hh:mm:ss" name="thoi-gian-dung-2"></td>
+                <td><input type="text" class="form-control" placeholder="hh:mm:ss" name="thoi-gian-tt-2"></td>
+                <td><input type="text" class="form-control" placeholder="Ghi Chú ..." name="ghi-chu-2"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Nút hành động -->
+        <div class="d-flex flex-row-reverse mt-2" style="position: absolute; bottom: 15px; right: 20px">
+            <div>
+                <button type="submit" class="btn btn-danger">Hủy lập</button>
+            </div>
+            <div>
+                 <button type="submit" class="btn btn-success me-3" id="cancelTicket">Xác nhận</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+         aria-atomic="true" data-bs-delay="2500">
+        <div class="d-flex">
+            <div class="toast-body">
+                Lập lịch thành công!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

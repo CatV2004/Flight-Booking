@@ -1,0 +1,65 @@
+<div class="detail-flight-card">
+    <div class="flight-schedule-container">
+        {% for detail in flight_data.details_flight %}
+        <div class="flight-schedule flex-column p-4 pt-0">
+            <div class="details">
+                <div class="d-flex row">
+                    <div class="col-md-1 flex-column mr-1 p-0 justify-content-center">
+                        <div class="time">{{ detail.departure_time }}</div>
+                        <div class="cl-deep f-2 fw">{{ detail.departure_date }}</div>
+                    </div>
+                    <div class="col-md-1 body-mid">
+                        <div class="flex-column" style="position: relative;">
+                            <div class="circle d-flex"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 flex-column">
+                        <div class="time">
+                            {{ detail.departure_airport.airport_name }} ({{ detail.departure_airport.airport_code }})
+                        </div>
+                        <div class="cl-deep f-3 fw">Sân bay {{ detail.departure_airport.airport_location }}</div>
+                    </div>
+                </div>
+                <div class="d-flex row" style="height: 100px;">
+                    <div class="col-md-1 d-flex p-0 justify-content-center">
+                        <div class="cl-deep f-4 d-flex justify-content-center align-items-center">{{ detail.duration }}</div>
+                    </div>
+                    <div class="col-md-1 body-mid">
+                        <div class="d-flex" style="position: relative;">
+                            <div class="line-col d-flex"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex col-md-10 justify-content-start">
+                        <div class="time mx-3 d-flex justify-content-center align-items-center">{{ detail.airline }}</div>
+                        <div class="logo-flight d-flex justify-content-center align-items-center">
+                            <img src="{{ detail.logo }}" alt="{{ detail.airline }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex row">
+                    <div class="col-md-1 flex-column mr-1 p-0 justify-content-center">
+                        <div class="time">{{ detail.arrival_time }}</div>
+                        <div class="cl-deep f-2 fw">{{ detail.arrival_date }}</div>
+                    </div>
+                    <div class="col-md-1 body-mid">
+                        <div class="d-flex" style="position: relative;">
+                            <div class="circle d-flex"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 flex-column">
+                        <div class="time">
+                            {{ detail.arrival_airport.airport_name }} ({{ detail.arrival_airport.airport_code }})
+                        </div>
+                        <div class="cl-deep f-3 fw">Sân bay {{ detail.arrival_airport.airport_location }}</div>
+                    </div>
+                </div>
+                {% if not loop.last %}
+                <div class="stop_duration mb-2 mt-3 cl-deep d-flex f-b">
+                    <span>Thời gian dừng: {{ detail.duration }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

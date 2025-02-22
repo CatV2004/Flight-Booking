@@ -1,0 +1,33 @@
+.container {
+        max-width: 1600px !important;
+        padding: 15px;
+    }
+    .welcome-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 36px;
+        text-align: center;
+        padding: 20px 0;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+        color: #333;
+    }
+
+    .welcome-text {
+        font-size: 40px;
+        font-weight: bold;
+        color: #dc3545; /* Màu đỏ */
+    }
+
+    .user-name {
+        font-size: 40px;
+        font-weight: bold;
+        color: #28a745; /* Màu xanh lá cây */
+    }
+
+    .sub-title {
+        font-size: 24px;
+        color: #6c757d; /* Màu xám */
+    }
+

@@ -1,0 +1,149 @@
+
+.container-right {
+    position: relative;
+    transition: top 0.1s ease, height 0.1s ease; /* Thêm hiệu ứng cho top và height */
+    overflow: hidden;
+    padding: 0px;
+    max-width: 100%;
+}
+.container-right > * {
+    flex-grow: 1;  /* Cho phép các phần tử con thay đổi chiều cao theo cha */
+    overflow: auto;
+}
+
+
+
+/* Phần chi tiết chuyến bay */
+.logo-flight img {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.detail-flight-card {
+    display: block;
+    margin-top: 5px;
+    padding: 20px;
+    background-color: #e5f0f6;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.7s ease-out, padding 0.3s ease;
+}
+
+/* Phần tử thông tin chuyến bay */
+.flight-schedule {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Hiệu ứng cho các phần tử con */
+.flight-schedule .time {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/*Giữ hiệu ứng hover sau khi nhấn */
+.detail-toggle.active {
+    color: #007bff;
+}
+
+.detail-toggle.active::after {
+    transform: scaleX(1);
+    /* Giữ đường gạch dưới khi đã nhấn */
+}
+
+/* Hiệu ứng hover cho nút Chi tiết */
+.detail-toggle {
+    cursor: pointer;
+    position: relative;
+}
+
+.detail-toggle:hover {
+    color: #007bff;
+}
+
+/* Giữ hiệu ứng hover sau khi nhấn */
+.detail-toggle.active {
+    color: #007bff;
+}
+
+.detail-toggle.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(1);
+    /* Giữ đường gạch dưới khi đã nhấn */
+    transition: transform 0.3s ease;
+}
+
+
+
+/* Tạo hình tròn */
+.circle {
+    position: absolute;
+    top: 10px;
+    /* Điều chỉnh cho hình tròn nằm ở trên đường thẳng */
+    left: 27%;
+    /* Dịch chuyển hình tròn về giữa hoàn hảo */
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #00aaff;
+    /* Màu viền */
+    background-color: white;
+    /* Màu nền */
+    border-radius: 50%;
+    /* Hình tròn */
+    justify-content: space-around;
+    z-index: 100;
+}
+
+/* Đường thẳng */
+.line-col {
+    position: absolute;
+    justify-content: space-around;
+    top: 45px;
+    /* Đảm bảo đường thẳng nằm ngay dưới hình tròn */
+    left: 50%;
+    /* Canh giữa đường thẳng theo chiều ngang */
+    transform: translate(-50%, -50%) rotate(90deg);
+    /* Xoay đường thẳng 90 độ */
+    /* Dịch chuyển đường thẳng về giữa */
+    width: 150px;
+    /* Độ dài của đường thẳng */
+    height: 1px;
+    /* Độ dày của đường thẳng */
+    background-color: #666;
+    /* Màu sắc của đường thẳng */
+}
+
+.btn-primary {
+    background-color: #007bff;  /* Màu nền xanh */
+    color: white;  /* Màu chữ trắng */
+    font-size: 16px;  /* Kích thước chữ */
+    padding: 10px 20px;  /* Khoảng cách bên trong nút */
+    border-radius: 5px;  /* Bo tròn các góc */
+    text-align: center;  /* Căn giữa nội dung */
+    text-decoration: none;  /* Xóa gạch chân */
+    transition: background-color 0.3s ease;  /* Hiệu ứng chuyển màu nền khi hover */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;  /* Màu nền khi hover (darker blue) */
+    cursor: pointer;  /* Con trỏ chuột khi hover */
+}
+
+.btn-primary:focus {
+    outline: none;  /* Bỏ viền khi nút được chọn */
+}
+
+.modal-content {
+    width: 55rem !important;
+}

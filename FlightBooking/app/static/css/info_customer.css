@@ -1,0 +1,278 @@
+/*css basic*/
+body {
+    background-color: #f8f9fa;
+}
+.container-main {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    font-weight: bold;
+    color: #343a40;
+}
+.form-label {
+    font-weight: 500;
+}
+.btn-primary {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 10px;
+}
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f7f7f7;
+}
+.card-title {
+    font-weight: bold;
+}
+.card-text {
+    font-size: 0.9rem;
+}
+.card-body {
+    border-radius: 10px;
+}
+
+
+.btn-detail {
+        background: linear-gradient(90deg, #17a2b8, #0d6efd); /* Gradient xanh lam */
+        border: none; /* Loại bỏ viền */
+        color: white; /* Màu chữ */
+        padding: 8px 12px; /* Tăng khoảng cách bên trong */
+        font-size: 10px; /* Kích thước chữ vừa phải */
+        font-weight: bold; /* Chữ đậm */
+        border-radius: 20px; /* Bo góc nút */
+        cursor: pointer; /* Con trỏ dạng tay */
+        transition: all 0.3s ease; /* Hiệu ứng mượt */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Bóng mờ tạo độ nổi */
+}
+
+.btn-detail:hover {
+    background: linear-gradient(90deg, #0d6efd, #0056b3); /* Gradient đậm hơn khi hover */
+    transform: translateY(-3px); /* Nút nhô lên nhẹ */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Bóng mờ rõ hơn */
+}
+
+.btn-detail:active {
+    background: linear-gradient(90deg, #0056b3, #003d80); /* Gradient tối hơn khi bấm */
+    transform: translateY(1px); /* Nút lún xuống nhẹ */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Bóng mờ nhỏ hơn */
+}
+
+.text-end:hover .btn-detail{
+    color: white;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 10px 0;
+}
+
+.divider span {
+    width: 100px;
+    /* Độ dài đường kẻ */
+    height: 2px;
+    /* Độ dày đường kẻ */
+    background-color: #ccc;
+    /* Màu đường kẻ */
+    position: relative;
+}
+
+.divider span::before,
+.divider span::after {
+    content: "";
+    width: 10px;
+    /* Kích thước đầu tròn */
+    height: 10px;
+    background-color: #7c7c7c;
+    /* Màu đầu tròn */
+    border-radius: 50%;
+    /* Tạo hình tròn */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.divider span::before {
+    left: -10px;
+    /* Định vị đầu tròn bên trái */
+}
+
+.divider span::after {
+    right: -10px;
+    /* Định vị đầu tròn bên phải */
+}
+
+.f-b {
+    font-weight: Bold;
+}
+
+.f-15 {
+    font-size: 1.5rem;
+}
+
+.f-12 {
+    font-size: 1.2rem;
+}
+
+.f-11 {
+    font-size: 1.1rem;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+img {
+    border-radius: 5px;
+    border: 2px solid #e0e0e0d9;
+}
+.fw-700 {
+    font-weight: 700;
+}
+
+
+.bgcl-lavender {
+    background: linear-gradient(135deg, #E6E6FA, #D8BFD8);
+    padding: 10px;
+    border-radius: 8px;
+    color: #4A4A4A; /* Màu chữ tương phản */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng mờ */
+    text-align: center; /* Canh giữa nội dung */
+}
+
+.btn-custom {
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Gradient xanh lam */
+    border: 1px solid #a6a6a6cc !important;
+    color: white !important; /* Màu chữ */
+    padding: 10px 20px !important; /* Tăng khoảng cách trong nút */
+    font-size: 22px !important; /* Kích thước chữ lớn hơn */
+    font-weight: bold !important; /* Chữ đậm */
+    border-radius: 25px; /* Bo góc mềm mại */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3) !important; /* Bóng mờ để nút trông nổi lên */
+    transition: all 0.3s ease !important; /* Hiệu ứng chuyển đổi mượt */
+}
+
+.btn-custom:hover {
+    background: linear-gradient(90deg, #0056b3, #003d80); /* Màu gradient đậm hơn */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Bóng mạnh hơn */
+    transform: translateY(-2px); /* Hiệu ứng nhấn nút */
+}
+
+.btn-custom:active {
+    transform: translateY(1px); /* Hiệu ứng khi bấm */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.f-20 {
+    font-size: 20px;
+}
+
+.fb {
+    font-weight:Bold;
+}
+
+.fw-300 {
+    font-weight: 300;
+}
+
+.flight-amenities {
+    border-radius: 10px; /* Bo góc */
+    background-color: #f9f9f9; /* Nền trắng nhạt */
+    overflow: hidden; /* Đảm bảo các phần bên trong không tràn */
+}
+
+.flight-amenities .header {
+    background-color: #e6f7ff; /* Nền xanh nhạt */
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd; /* Đường kẻ dưới */
+}
+
+.flight-amenities .amenity-item {
+    display: flex;
+    padding: 10px;
+    background-color: #f0fcff; /* Nền nhạt */
+    border-bottom: 1px solid #ddd; /* Đường kẻ dưới mỗi mục */
+}
+
+.flight-amenities .amenity-item:last-child {
+    border-bottom: none; /* Không kẻ dưới mục cuối */
+}
+
+.flight-amenities .icon img {
+    display: block;
+}
+
+.flight-amenities .info h5 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.flight-amenities .info p {
+    font-size: 18px;
+    color: #555;
+    margin: 0;
+}
+
+.flight-amenities .action a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff; /* Màu xanh cho liên kết */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.flight-amenities .action a:hover {
+    color: #0056b3; /* Đậm hơn khi hover */
+}
+
+.icon i {
+        font-size: 24px;
+        color: #007bff;
+}
+
+.baggage-options {
+    margin-top: 20px;
+}
+
+.baggage-option {
+    border: 2px solid #b6b6b6b0;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 2px 10px;
+}
+
+.baggage-option label {
+    font-size: 1rem;
+}
+
+.price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #e63946; /* Red color for prices */
+}
+
+.info-lug {
+    border: 2px solid #d9d9d9b8;
+    padding: 10px 15px;
+    border-radius: 10px; /* Bo góc mềm mại */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1)
+}
+
+.is-invalid {
+    border: 2px solid #dc3545 !important; /* Viền đỏ cảnh báo */
+    background-color: #f8d7da !important; /* Nền đỏ nhạt */
+    }
+
+.is-invalid:focus {
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); /* Hiệu ứng đổ bóng khi focus */
+}

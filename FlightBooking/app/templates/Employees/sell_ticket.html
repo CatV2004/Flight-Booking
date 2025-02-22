@@ -1,0 +1,263 @@
+{% extends 'Employees/layout/base.html' %}
+
+{% block content %}
+<body>
+<img src="https://img.thuthuatphanmem.vn/uploads/2018/10/11/hinh-anh-may-bay-viet-nam-dep_041753785.jpg"
+     alt="Anh máy bay" class="image">
+{% if err_msg %}
+<div class="alert alert-danger mt-5" style="position: absolute; left: 140px; width: 50%">{{err_msg}}</div>
+{% endif %}
+<form method="post" action="/page/sellticket">
+    <div class="d-flex align-items-center justify-content-center min-vh-100" style="min-height: 90vh !important;">
+        <div class="container text-center ticket">
+            <div class="container-fluid mt-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2 bg-primary text-white"
+                             style="background-color: navajowhite !important; border-radius: 10px !important;">
+                            <div class="container mt-3">
+                                <h4 style="margin-bottom: 0 !important;">Thao tác vé</h4>
+                                <div class="list-group">
+                                    <a href="/page/sellticket"
+                                       class="list-group-item list-group-item-action bg-primary"><i
+                                            class="fas fa-ticket-alt"></i>Bán vé</a>
+                                    <a href="/page/changeticket" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-exchange-alt"></i>Đổi vé</a>
+                                    <a href="/page/cancelticket" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-ban"></i>Hủy
+                                        vé</a>
+                                    <a href="/page/printticket" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-print"></i>Xuất
+                                        vé</a>
+                                    <a href="#" class="list-group-item list-group-item-action"><i
+                                            class="fas fa-arrow-left"></i>Quay lại</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10 text-white">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="booking-form">
+                                        <form class="px-5">
+                                            <div class="d-flex justify-content-start align-items-center gap-3"
+                                                 style="padding-bottom:20px">
+                                                <!-- One Way -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                                            id="oneWayDropdown"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                        {%if 'info' in session%}
+                                                        {{session['info']['loai_ve']}}
+                                                        {%else%}Một Chiều {%endif%}
+                                                    </button>
+                                                    <ul class="dropdown-menu sell-ticket-dropdown"
+                                                        aria-labelledby="oneWayDropdown">
+                                                        <li><a class="dropdown-item" href="#">Một Chiều</a></li>
+                                                        <li><a class="dropdown-item" href="#">Khứ Hồi</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <!-- Passengers -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle d-flex align-items-center"
+                                                            type="button"
+                                                            id="passengerDropdown" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="bi bi-people me-2"></i> <span class="passenger-label">
+                                                    {%if 'info' in session%}
+                                                        {{ session['info']['so_luong_hanh_khach']}}
+                                                    {%else%}
+                                                       1 Người
+                                                    {%endif%}
+                                                </span>
+                                                    </button>
+                                                    <div class="dropdown-menu p-3 shadow-lg passengers-dropdown"
+                                                         style="width: 300px;">
+                                                        <!-- Adult -->
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <div>
+                                                                <strong>Người lớn ( > 12+ )</strong>
+                                                            </div>
+                                                            <div class="input-group input-group-sm"
+                                                                 style="width: 110px;">
+                                                                <button class="btn btn-outline-secondary"
+                                                                        id="adult-decrease">-
+                                                                </button>
+                                                                <input type="text" class="form-control text-center"
+                                                                       id="adult-count"
+                                                                       value="1" readonly>
+                                                                <button class="btn btn-outline-secondary"
+                                                                        id="adult-increase">+
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Child -->
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <div>
+                                                                <strong>Trẻ em (tuổi: 1-12)</strong>
+                                                            </div>
+                                                            <div class="input-group input-group-sm"
+                                                                 style="width: 110px;">
+                                                                <button class="btn btn-outline-secondary"
+                                                                        id="child-decrease">-
+                                                                </button>
+                                                                <input type="text" class="form-control text-center"
+                                                                       id="child-count"
+                                                                       value="0" readonly>
+                                                                <button class="btn btn-outline-secondary"
+                                                                        id="child-increase">+
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Infant -->
+                                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                                            <div>
+                                                                <strong>Trẻ sơ sinh ( < 1+ )</strong>
+                                                            </div>
+                                                            <div class="input-group input-group-sm"
+                                                                 style="width: 110px;">
+                                                                <button class="btn btn-outline-secondary"
+                                                                        id="infant-decrease">-
+                                                                </button>
+                                                                <input type="text" class="form-control text-center"
+                                                                       id="infant-count"
+                                                                       value="0" readonly>
+                                                                <button class="btn btn-outline-secondary"
+                                                                        id="infant-increase">+
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Done Button -->
+                                                        <button class="btn btn-danger w-100" id="done-btn">Done</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Economy -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-light dropdown-toggle" type="button"
+                                                            id="classDropdown"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">Phổ thông</button>
+                                                    <ul class="dropdown-menu sell-ticket-dropdown"
+                                                        aria-labelledby="classDropdown">
+                                                        <li><a class="dropdown-item" href="#">Phổ thông</a></li>
+                                                        <li><a class="dropdown-item" href="#">Thương gia</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row d-flex align-items-center">
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label for="fromInput" class="form-label">Nơi đi</label>
+                                                        <input type="text" id="fromInput" name="fromInput"
+                                                               class="form-control"
+                                                               placeholder="Chọn điểm đi"
+                                                               data-bs-toggle="dropdown" aria-expanded="false"
+                                                               data-bs-display="static"
+                                                               {%if 'info' in session%}
+                                                        value = "{{ session['info']['noi_di']}}"
+                                                        {%endif%}>
+                                                        <!-- Dropdown -->
+                                                        <div class="dropdown-menu from-and-to w-100 p-3 ">
+                                                            {% for area in areas %}
+                                                            <div>
+                                                                <h6 class="dropdown-header">{{area.ten_khu_vuc}}</h6>
+                                                                <div class="d-flex flex-wrap gap-2">
+                                                                    {%for airport in airports%}
+                                                                    {%if area.ma_khu_vuc == airport.ma_khu_vuc%}
+                                                                    <button type="button" class="btn btn-outline-secondary btn-from-and-to">{{airport.dia_diem}}</button>
+                                                                    {%endif%}
+                                                                    {%endfor%}
+                                                                </div>
+                                                            </div>
+                                                            {%endfor%}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 text-center">
+                                                    <button type="button" class="btn    " id="swapValue">
+                                                        <i class="bi bi-arrow-left-right text-primary fs-4"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="mb-3 position-relative">
+                                                        <label for="toInput" class="form-label">Nơi đến</label>
+                                                        <input type="text" id="toInput" class="form-control"
+                                                               name="toInput"
+                                                               placeholder="Chọn điểm đến"
+                                                               data-bs-toggle="dropdown" aria-expanded="false"
+                                                               data-bs-display="static"
+                                                               {%if 'info' in session%}
+                                                        value = "{{ session['info']['noi_den']}}"
+                                                        {%endif%}>
+                                                        <!-- Dropdown -->
+                                                        <div class="dropdown-menu from-and-to w-100 p-3 ">
+                                                            {% for area in areas %}
+                                                            <div>
+                                                                <h6 class="dropdown-header">{{area.ten_khu_vuc}}</h6>
+                                                                <div class="d-flex flex-wrap gap-2">
+                                                                    {%for airport in airports%}
+                                                                    {%if area.ma_khu_vuc == airport.ma_khu_vuc%}
+                                                                    <button type="button" class="btn btn-outline-secondary btn-from-and-to">{{airport.dia_diem}}</button>
+                                                                    {%endif%}
+                                                                    {%endfor%}
+                                                                </div>
+                                                            </div>
+                                                            {%endfor%}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row row-secondary">
+                                                <div class="col-md-3 mt-3">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Ngày đi</span>
+                                                        <input class="form-control" id="departure-date" type="date"
+                                                               value="{{session['info']['ngay_di'] if 'info' in session else time_now}}"
+                                                               required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 mt-3">
+                                                    <div class="form-group d-flex align-items-center m-0"
+                                                         style="padding-left: 20px; height: 22px">
+                                                        <input type="checkbox" id="roundTripToggle" class="me-2">
+                                                        <label for="roundTripToggle" class="form-label mb-0">Khứ
+                                                            hồi</label>
+                                                    </div>
+                                                    <div class="form-group mt-2">
+                                                        <input class="form-control" type="date" id="returnDate" value="{{session['info']['ngay_di'] if 'info' in session else time_now}}" disabled
+                                                               min="{{time_now}}"
+                                                               style="color: black;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 mt-3">
+                                                    <div class="form-btn">
+                                                        <button type="submit" id="search-info"
+                                                                class="btn btn-lg d-flex align-items-center justify-content-center"
+                                                                style="width: 53px; height: 53px; background-color: rgb(255, 94, 31); border-radius: 16px; border: 3px solid #a88383;">
+                                                            <i class="fas fa-search text-white"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+{% endblock %}

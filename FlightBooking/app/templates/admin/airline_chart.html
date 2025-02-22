@@ -1,0 +1,139 @@
+<div class="subheader-container mb-0" style="margin-top:10rem;">
+    <h2 class="text-center my-2 mb-0">Báo cáo thống kê doanh thu theo hãng máy bay</h2>
+</div>
+<div class="flex-column mt-3">
+    <div class="d-flex justify-content-end">
+
+        <div class="d-flex">
+            <label>
+                <input type="radio" name="chartType" value="bar" checked onchange="updateChart3()"> Biểu đồ cột
+            </label>
+            <label>
+                <input type="radio" name="chartType" value="pie" onchange="updateChart3()"> Biểu đồ tròn
+            </label>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-12">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Mã Hãng</th>
+                    <th>Tên Hãng</th>
+                    <th>Tổng Doanh Thu (VND)</th>
+                </tr>
+                </thead>
+                <tbody id="statsTableBody-3">
+                {% if not airline_chart %}
+                <tr>
+                    <td colspan="3" class="text-center">Không có dữ liệu cho lựa chọn này.</td>
+                </tr>
+                {% else %}
+                {% for s in airline_chart %}
+                <tr>
+                    <td>{{ s[0] }}</td>
+                    <td>{{ s[1] }}</td>
+                    <td>{{ "{:,.0f}".format(s[2]) }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5 col-12 mt-0">
+            <canvas id="myChart-3"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Dữ liệu được trả về từ server
+    let airlineLabels = [];
+    let chartData = []; // Tổng doanh thu (VND)
+
+    {% for s in airline_chart %}
+        airlineLabels.push("{{ s[0] }} - {{ s[1] }}"); // Mã hãng - Tên hãng
+        chartData.push({{ s[2] }}); // Tổng doanh thu
+    {% endfor %}
+
+    let chartInstance3; // Lưu trữ biểu đồ Chart.js instance
+
+    // Hàm tạo biểu đồ
+    function createChart3(type) {
+        const ctx = document.getElementById('myChart-3').getContext('2d');
+
+        // Nếu biểu đồ đã tồn tại, phá hủy để tạo mới
+        if (chartInstance3) {
+            chartInstance3.destroy();
+        }
+
+        chartInstance3 = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: airlineLabels,
+                datasets: [{
+                    label: "Tổng doanh thu (VND)",
+                    data: chartData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        enabled: true,
+                        callbacks: {
+                            label: function (context) {
+                                let value = context.raw || 0;
+                                return context.dataset.label + ": " + value.toLocaleString('vi-VN') + " VND";
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return value.toLocaleString('vi-VN') + " VND";
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Hàm cập nhật biểu đồ khi chọn loại biểu đồ
+    function updateChart3() {
+        const chartType = document.querySelector('input[name="chartType"]:checked').value;
+        createChart3(chartType);
+    }
+
+    // Tạo biểu đồ cột mặc định khi tải trang
+    document.addEventListener('DOMContentLoaded', function () {
+        createChart3('bar');
+    });
+</script>

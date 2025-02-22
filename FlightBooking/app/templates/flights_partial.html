@@ -1,0 +1,154 @@
+<!-- Flights Section -->
+
+<div class="col-md-8 ps-4">
+    <form method="POST"
+          action="{% if round_trip %}{{ url_for('customer.flights_roundtrip') }}{% else %}{{ url_for('customer.flights_normal') }}{% endif %}">
+
+
+        <!-- Header Section -->
+        <div class="header-card">
+            <div>
+                {% if outbound_flight %}
+                <!-- Hiển thị thông tin khứ hồi -->
+                <h5 class="mb-0">{{ destination }} ({{ to_code }}) → {{ start }} ({{ from_code }})</h5>
+                <div class="details">{{ return_date_str }} | {{ ticket_quantity }} hành khách | {% if seat_class == "1" %}
+                                                                                                    Phổ thông
+                                                                                                {% else %}
+                                                                                                    Thương gia
+                                                                                                {% endif %}
+                </div>
+                {% else %}
+                <!-- Hiển thị thông tin lượt đi -->
+                <h5 class="mb-0">{{ start }} ({{ from_code }}) → {{ destination }} ({{ to_code }})</h5>
+                <div class="details">{{ departure_date }} | {{ ticket_quantity }} hành khách | {% if seat_class == "1" %}
+                                                                                                    Phổ thông
+                                                                                                {% else %}
+                                                                                                    Thương gia
+                                                                                                {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="re-search">
+                Đổi tìm kiếm
+                <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5"
+                        type="button" onclick="window.location.href='/'">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- list-card-->
+
+        {% set flights_to_display = flights_return if outbound_flight else flights %}
+        {% for flight in flights_to_display %}
+        <div class="flight-card flex-column">
+            <div class="general-flight-card">
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="d-flex">
+
+                        <div class="circle-image">
+                            <img src="{{ flight.logo }}"
+                                 alt="{{ flight.airline }}"/>
+                        </div>
+                        <div class="ms-3">
+                            <h4>{{ flight.airline }}</h4>
+                        </div>
+
+                    </div>
+                    <div class="mt-6" style="padding: 1.1rem;"></div>
+                    <div class="d-flex justify-content-between">
+                        <div class="cl-deep d-flex align-items-center detail-toggle toggleButton-detail-flight">Chi
+                            tiết
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="cl-deep">Khuyến mãi</div>
+                            <div class="circle-icon">
+                                <i class="fas fa-tag"></i> <!-- Icon khuyến mãi -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 d-flex justify-content-center p-3">
+                    <div class="flex-column">
+                        <div class="time">
+                            <span>{{ flight.departureTime }}</span>
+                        </div>
+                        <div class="codeFlight cl-deep d-flex justify-content-around">
+                            <p>{{ to_code }}</p>
+                        </div>
+                    </div>
+                    <div class="flex-column mx-3">
+                        <div class="t-use">
+                            <div class="codeFlight cl-deep d-flex justify-content-around">
+                                <div class="p2">{{ flight.duration }}</div>
+                            </div>
+                        </div>
+                        <div class="divider">
+                            <span></span>
+                        </div>
+                        <div class="t-use">
+                            <div class="codeFlight cl-deep d-flex justify-content-around">
+                                <div class="p2">{% if flight.stops > 0 %}
+                                    {{ flight.stops }} điểm dừng
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-column">
+                        <div class="time">
+                            <span>{{ flight.arrivalTime }}</span>
+                        </div>
+                        <div class="codeFlight cl-deep d-flex justify-content-around">
+                            <p>{{ from_code }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content">
+                        {% if flight.number_day > 0 %}
+                        <div class="p2 p-1">+{{ flight.number_day }} ngày</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3 d-flex justify-content-end">
+                    <div class="flex-column justify-content-end">
+                        <div class="col-md-12 text-end d-flex">
+                            <div class="price me-2">
+                                <span>{{ flight.price | format_currency }}</span>
+                            </div>
+                            <div>
+                                <p class="mt-1 text-muted">/khách</p>
+                            </div>
+                        </div>
+
+                        <!-- Khoảng cách giữa các hàng -->
+                        <div class="mt-3"></div>
+
+                        <div class="col-md-12 text-end">
+
+                            <button type="button" class="choose-btn"
+                                    data-flight='{{ flight | tojson }}'
+                                    data-round-trip='{{ round_trip }}'>
+                                Chọn
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-flight-card">
+
+                {% include 'detail-flights.html' %}
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </form>
+
+
+</div>
+
+
+

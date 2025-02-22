@@ -1,0 +1,216 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+        background: linear-gradient(120deg, #6a11cb, #2575fc);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card-body {
+        padding: 2rem;
+        background: #fff;
+    }
+
+
+    .card-img-left {
+        width: 45%;
+        background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
+        background-size: cover;
+    }
+
+    .btn-login {
+        font-size: 0.9rem;
+        letter-spacing: 0.05rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .card-body {
+        padding: 2rem;
+        background: #fff;
+    }
+
+    .btn-google, .btn-facebook {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.05rem;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-google {
+        background-color: #db4437;
+        color: #fff;
+    }
+
+    .btn-google:hover {
+        background-color: #c23321;
+        box-shadow: 0 4px 15px rgba(219, 68, 55, 0.5);
+    }
+
+    .btn-facebook {
+        background-color: #4267b2;
+        color: #fff;
+    }
+
+    .btn-facebook:hover {
+        background-color: #365899;
+        box-shadow: 0 4px 15px rgba(66, 103, 178, 0.5);
+    }
+
+    .form-control:focus {
+        border-color: #6a11cb;
+        box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+    }
+
+    .form-floating > label {
+        color: #888;
+        font-weight: 500;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #ddd;
+        margin: 0 1rem;
+    }
+
+    .divider span {
+        font-weight: 600;
+        color: #888;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .link {
+        color: #6a11cb;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .link:hover {
+        color: #2575fc;
+    }
+
+
+<!--    .btn-google {-->
+<!--        color: #ffffff !important; /* Đảm bảo chữ màu trắng */-->
+<!--        background-color: #ea4335 !important; /* Màu nền Google */-->
+<!--        border: none; /* Loại bỏ viền nếu cần */-->
+<!--        box-shadow: none; /* Loại bỏ shadow (nếu Bootstrap thêm vào) */-->
+<!--    }-->
+
+<!--    .btn-google:hover {-->
+<!--        background-color: #d8362a; /* Màu nền khi hover */-->
+<!--    }-->
+
+<!--    .btn-facebook {-->
+<!--        color: #ffffff !important; /* Đảm bảo chữ màu trắng */-->
+<!--        background-color: #3b5998 !important; /* Màu nền Facebook */-->
+<!--        border: none;-->
+<!--        box-shadow: none;-->
+<!--    }-->
+
+<!--    .btn-facebook:hover {-->
+<!--        background-color: #2d4373; /* Màu nền khi hover */-->
+<!--    }-->
+
+</style>
+
+
+<body>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-5 col-xl-5">
+            <div class="card flex-row my-5 shadow border-0 rounded-3">
+                <div class="card-body p-4 p-sm-5">
+                    <h5 class="card-title text-center mb-4 fw-light fs-5">Đăng nhập</h5>
+                    {% if err_msg %}
+                    <div class="alert alert-danger">
+                        {{ err_msg }}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" action="/login" enctype="multipart/form-data">
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="Họ tên" name="username">
+                            <label for="username">Tên đăng nhập</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Mật khẩu"
+                                   name="password">
+                            <label for="password">Mật khẩu</label>
+                        </div>
+
+                        <input type="hidden" name="next" value="{{ request.args.get('next') }}">
+
+                        <div class="d-grid mb-2">
+                            <button class="btn btn-primary btn-lg btn-login fw-bold text-uppercase" type="submit">
+                                Đăng nhập
+                            </button>
+                        </div>
+
+                        <a class="d-block text-center mt-2 small" href="/register">Chưa có tài khoản? Đăng ký</a>
+
+                        <hr class="my-4">
+
+                        <div class="d-grid mb-2">
+                            <a href="{{ url_for('login_google') }}"
+                               class="btn btn-google btn-lg btn-login fw-bold text-uppercase">
+                                <i class="fab fa-google me-2"></i> Đăng nhập với Google
+                            </a>
+                        </div>
+
+
+                        <div class="d-grid">
+                            <button class="btn btn-facebook btn-lg btn-login fw-bold text-uppercase" type="button">
+                                <i class="fab fa-facebook-f me-2"></i> Đăng nhập với Facebook
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

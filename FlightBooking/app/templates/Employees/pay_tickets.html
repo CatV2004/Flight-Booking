@@ -1,0 +1,46 @@
+{% extends 'Employees/layout/base.html' %}
+
+{% block content %}
+<body>
+<img src="https://img.thuthuatphanmem.vn/uploads/2018/10/11/hinh-anh-may-bay-viet-nam-dep_041753785.jpg"
+     alt="Anh máy bay" class="image">
+<div class="container py-2">
+    <h2 class="text-center mb-4">Thông tin thanh toán</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h5 class="mb-3">Chi tiết thanh toán</h5>
+                    <div class="mb-3">
+                        <img src="https://tse1.mm.bing.net/th?id=OIP.WaJRnmfx_-xd6JiF4ttX8QHaGa&pid=Api&P=0&h=180"
+                             alt="QR Code" class="img-fluid rounded">
+                        <p class="mt-2 text-muted">Quét mã QR để thanh toán</p>
+                    </div>
+                    <div class="mb-3">
+                        <p class="mb-1"><strong>Tên ngân hàng:</strong> MB Bank</p>
+                        <p class="mb-1"><strong>Số tài khoản:</strong> 0363950054</p>
+                        <p class="mb-1"><strong>Tên tài khoản:</strong> Lê Thanh Dân</p>
+                        <p class="mb-1" id="price"><strong>Số tiền:</strong> 1,000,000 VND</p>
+                    </div>
+                    <a onclick="chuyen_huong(this, event)" href="/page/sellticket" class="btn btn-primary w-100" id="cancelTicket">Kiểm tra thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+         aria-atomic="true" data-bs-delay="2500">
+        <div class="d-flex">
+            <div class="toast-body">
+                Thanh toán thành công!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,258 @@
+{% extends 'Employees/layout/base.html' %}
+
+{% block content %}
+<body>
+<img src="https://img.thuthuatphanmem.vn/uploads/2018/10/11/hinh-anh-may-bay-viet-nam-dep_041753785.jpg"
+     alt="Anh máy bay" class="image">
+<div class="d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container text-center ticket" style="margin-left: 50px; padding-bottom: 50px;">
+        <div class="container-fluid">
+            <div class="row" style="margin-top: 50px">
+                <div class="col-sm-3 col-md-6 col-lg-4 col-xl-2 bg-primary text-white"
+                     style="background-color: navajowhite !important; border-radius: 10px !important; height: 350px !important;">
+                    <div class="container mt-3">
+                        <h4 style="margin-bottom: 0 !important;">Thao tác vé</h4>
+                        <div class="list-group">
+                            <a href="/page/sellticket" class="list-group-item list-group-item-action"><i
+                                    class="fas fa-ticket-alt"></i>Bán vé</a>
+                            <a href="/page/changeticket" class="list-group-item list-group-item-action"><i
+                                    class="fas fa-exchange-alt"></i>Đổi vé</a>
+                            <a href="/page/cancelticket" class="list-group-item list-group-item-action"><i
+                                    class="fas fa-ban"></i>Hủy
+                                vé</a>
+                            <a href="/page/printticket" class="list-group-item list-group-item-action bg-primary"><i class="fas fa-print"></i>Xuất
+                                vé</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i
+                                    class="fas fa-arrow-left"></i>Quay lại</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9 col-md-6 col-lg-8 col-xl-10 text-white">
+                    <div class="container">
+                        <div class="row">
+                            <div class="d-inline-flex"
+                                 style="background-color: darkgray ; height: 200px; border-radius: 10px; position: relative; width: 100%; ">
+                                <div style="height: 40px; position: absolute; top: 20px; left: 410px"><h4>Điền thông
+                                    tin</h4></div>
+                                <form class="row g-3"
+                                      style="position: absolute; top: 80px; left: 20px; width: 95%; gap: 30px">
+                                    <!-- Họ và tên -->
+                                    <div class="col-md-3">
+                                        <label for="name" class="form-label">Họ và tên</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Nhập họ tên">
+                                    </div>
+
+                                    <!-- Số điện thoại -->
+                                    <div class="col-md-3">
+                                        <label for="phone" class="form-label">Số điện thoại</label>
+                                        <input type="text" class="form-control" id="phone"
+                                               placeholder="Nhập số điện thoại">
+                                    </div>
+
+                                    <!-- Số CCCD -->
+                                    <div class="col-md-3">
+                                        <label for="cccd" class="form-label">Số CCCD</label>
+                                        <input type="text" class="form-control" id="cccd" placeholder="Nhập số CCCD">
+                                    </div>
+                                    <!-- Nut tim kiem-->
+                                    <div class="col-md-3" style="position: absolute; right: -100px; bottom: -10px">
+                                        <div class="form-btn">
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal"
+                                                    class="btn btn-lg d-flex align-items-center justify-content-center"
+                                                    style="width: 53px; height: 53px; background-color: rgb(255, 94, 31); border-radius: 16px; border: 3px solid #a88383;">
+                                                <i class="fas fa-search text-white"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    <!-- The Modal -->
+                                    <div class="modal fade" id="myModal">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                                <!-- Modal body -->
+                                                <div class="modal-body" style="height: 450px;">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="d-inline-flex"
+                                                                 style="background-color: darkgray ; height: 400px; border-radius: 10px; position: relative; width: 80%; left: 100px">
+                                                                <div style="text-align: center; display: flex; align-items: center; gap: 20px; width: 300px; height: 50px; position: absolute; left: 300px; top: 15px">
+                                                                    <div style="width: 70px; font-size: 18px">
+                                                                        <p style="margin-bottom: 2px;">HCM</p>
+                                                                        <div>
+                                                                            <span class="font-bold"
+                                                                                  style="font-weight: bold;">06:00</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- điểm dừng -->
+                                                                    <div class="d-flex flex-column align-items-center"
+                                                                         style="width: 120px">
+                                                                        <p class="text-muted mb-2"
+                                                                           style="margin-top: -11px">0 diểm dừng</p>
+                                                                        <!-- Mũi tên -->
+                                                                        <div class="arrow-c ontainer d-flex align-items-center"
+                                                                             style="display: flex; align-items: center; position: absolute">
+                                            <span class="dot"
+                                                  style="height: 8px; width: 8px; background-color: gray; border-radius: 50%;"></span>
+                                                                            <div class="line"
+                                                                                 style=" flex-grow: 2; height: 2px; background-color: gray; margin: 0; width: 80px;"></div>
+                                                                            <div style="font-size: 19px; color: gray; margin-left: -12px; margin-top: -3px">
+                                                                                &rarr;
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style="width: 70px; font-size: 18px">
+                                                                        <p style="margin-bottom: 2px;">Hà Nội</p>
+                                                                        <div>
+                                                                            <span class="font-bold"
+                                                                                  style="font-weight: bold;">07:30</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="height: 40px; position: absolute; top: 80px; left: 380px">
+                                                                    <h4>Thông tin vé</h4></div>
+                                                                <!-- Form thông tin -->
+                                                                <div class="row g-3"
+                                                                     style="position: absolute; top: 120px; left: 20px; width: 95%">
+                                                                    <!-- Ho Tên -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Họ và Tên</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: white; border-radius: 5px; height: 35px; color: black;">
+                                                                            <label>Lê Thanh Dân</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Số điện thoại -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Số điện thoại</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: white; border-radius: 5px; height: 35px; color: black;">
+                                                                            <label>0363950054</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Số CCCD -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Số CCCD</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: white; border-radius: 5px; height: 35px; color: black;">
+                                                                            <label>060204000596</label>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!-- Hạng vé -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Hạng vé</label>
+                                                                        <div class="dropdown">
+                                                                            <button class="btn btn-light dropdown-toggle"
+                                                                                    type="button"
+                                                                                    id="oneWayDropdown"
+                                                                                    data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false"
+                                                                                    style="width: 190px; height: 35px">
+                                                                                Phổ thông
+                                                                            </button>
+                                                                            <ul class="dropdown-menu sell-ticket-dropdown"
+                                                                                aria-labelledby="oneWayDropdown">
+                                                                                <li><a class="dropdown-item" href="#">Phồ thông</a></li>
+                                                                                <li><a class="dropdown-item" href="#">Thương gia</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Loại vé -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Loại vé</label>
+                                                                        <div class="dropdown">
+                                                                            <button class="btn btn-light dropdown-toggle"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false"
+                                                                                    style="width: 190px; height: 35px">
+                                                                                Một chiều
+                                                                            </button>
+                                                                            <ul class="dropdown-menu sell-ticket-dropdown"
+                                                                                aria-labelledby="oneWayDropdown">
+                                                                                <li><a class="dropdown-item" href="#">Một
+                                                                                    Chiều</a></li>
+                                                                                <li><a class="dropdown-item" href="#">Khứ
+                                                                                    Hồi</a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Ngày đi -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Ngày đi</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: white; border-radius: 5px; height: 35px; color: black;">
+                                                                             <input class="form-control" id="departure-date" type="date" required>
+                                                                        </div>
+                                                                    </div>
+                                                                     <!-- Ngày về -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Ngày về</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: white; border-radius: 5px; height: 35px; color: black;">
+                                                                             <input class="form-control" id="return-date" type="date" required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Vị trí ngồi -->
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label">Vị trí ngồi</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: white; border-radius: 5px; height: 35px; color: black;">
+                                                                            <label>A3</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Tổng thanh toán-->
+                                                                    <div class="col-md-3"
+                                                                         style="position: absolute; width: 150px; left: 350px; top: 170px">
+                                                                        <label class="form-label">Tổng thanh
+                                                                            toán</label>
+                                                                        <div class="d-flex justify-content-center align-items-center"
+                                                                             style="background-color: navajowhite; border-radius: 5px; height: 35px; color: black;">
+                                                                            <label>1.252.000 VND</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer d-flex justify-content-center align-items-center">
+                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                                            id="cancelTicket">Xuất vé
+                                                    </button>
+                                                    <button type="button" class="btn btn-success"
+                                                            data-bs-dismiss="modal">Thoát
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+         aria-atomic="true" data-bs-delay="2500">
+        <div class="d-flex">
+            <div class="toast-body">
+                Xuất vé thành công!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

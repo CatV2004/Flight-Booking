@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+
+{% block custom_head_scripts %}
+<script src="../static/js/flights.js"></script>
+{% endblock %}
+
+{% block custom_styles %}
+<link type="text/css" rel="stylesheet" href="../static/css/flights.css"/>
+{% endblock %}
+
+{% block content %}
+<body style="position: relative;">
+
+<div class="container py-4">
+
+    <div class="row">
+            <!-- Filters Section -->
+            {% include 'filters_partial.html' %}
+
+            <!-- Flights Section -->
+            {% include 'flights_partial.html' %}
+
+    </div>
+</div>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+{% endblock %}

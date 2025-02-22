@@ -1,0 +1,370 @@
+<!-- Filters Section -->
+<div class="col-md-4 flex-column">
+    <div>
+        <div class="container-left">
+            <form id="flight-filter-form" method="get"
+                  action="{% if round_trip %}{{ url_for('customer.flights_roundtrip') }}{% else %}{{ url_for('customer.flights_normal') }}{% endif %}">
+
+                <div class="flight-you" {% if round_trip %} style="display: block;" {% else %}
+                     style="display: none;" {% endif %}>
+                    <div class="trip-card">
+                        <div class="trip-header d-flex justify-content-center">
+                            <i class="trip-icon">✈️</i> <!-- Biểu tượng máy bay -->
+                            <h3 class="trip-title">Chuyến bay của bạn</h3>
+                        </div>
+                        <div class="trip-list">
+
+                            <div class="trip-item flex-column">
+
+                                <div class="row d-flex trip-details justify-content-start align-items-center">
+                                    <div
+                                            class="d-flex col-md-2 trip-detail-left align-items-center justify-content-center m-2">
+                                        <div class="trip-number">
+                                            <span>1</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 trip-detail-right p-0">
+                                        <div>
+                                            <span class="trip-date">{{ departure_date }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="trip-route time">{{ start }}  → {{ destination }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if outbound_flight %}
+                                <div class="detail-trip-item mt-4">
+                                    <div class="detail-trip-item-top d-flex">
+                                        <div class="circle-image">
+                                            <img src="{{ outbound_flight.logo }}"
+                                                 alt="{{ outbound_flight.airline }}"/>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h4>{{ outbound_flight.airline }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="detail-trip-item-bottom">
+
+                                        <div class="d-flex justify-content-center p-3">
+                                            <div class="flex-column">
+                                                <div class="time">
+                                                    <span>{{ outbound_flight.departureTime }}</span>
+                                                </div>
+                                                <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                    <p>{{ from_code }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex-column mx-3">
+                                                <div class="t-use">
+                                                    <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                        <div class="p2">{{ outbound_flight.duration }}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="divider">
+                                                    <span></span>
+                                                </div>
+                                                <div class="t-use">
+                                                    <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                        <div class="p2">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-column">
+                                                <div class="time">
+                                                    <span>{{ outbound_flight.arrivalTime }}</span>
+                                                </div>
+                                                <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                    <p>{{ to_code }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {% endif %}
+
+
+                            </div>
+
+                            <div class="trip-item flex-column">
+
+                                <div class="row d-flex trip-details justify-content-start align-items-center">
+                                    <div
+                                            class="d-flex col-md-2 trip-detail-left align-items-center justify-content-center m-2">
+                                        <div class="trip-number">
+                                            <span>2</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 trip-detail-right p-0">
+                                        <div>
+                                            <span class="trip-date">{{ return_date_str }}</span>
+                                        </div>
+                                        <div>
+                                            <span class="trip-route time">{{ destination }} → {{ start }} </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if return_flight %}
+                                <div class="detail-trip-item mt-4">
+                                    <div class="detail-trip-item-top d-flex">
+                                        <div class="circle-image">
+                                            <img src="{{ return_flight.logo }}"
+                                                 alt="{{ return_flight.airline }}"/>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h4>{{ return_flight.airline }}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="detail-trip-item-bottom">
+
+                                        <div class="d-flex justify-content-center p-3">
+                                            <div class="flex-column">
+                                                <div class="time">
+                                                    <span>{{ return_flight.departureTime }}</span>
+                                                </div>
+                                                <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                    <p>{{ to_code }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex-column mx-3">
+                                                <div class="t-use">
+                                                    <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                        <div class="p2">{{ return_flight.duration }}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="divider">
+                                                    <span></span>
+                                                </div>
+                                                <div class="t-use">
+                                                    <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                        <div class="p2">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-column">
+                                                <div class="time">
+                                                    <span>{{ return_flight.arrivalTime }}</span>
+                                                </div>
+                                                <div class="codeFlight cl-deep d-flex justify-content-around">
+                                                    <p>{{ from_code }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                        {% if outbound_flight and return_flight %}
+                        <div class="d-flex justify-content-center mt-4 submit-ticket">
+                            <a href="{{ url_for('customer.info_customer') }}" class="btn btn-primary"
+                               style="font-size: 20px;">Đặt vé</a>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <div class="filter-section-main">
+                    <div class="filter-container">
+                        <div class="filter-header">
+                            <span>Bộ lọc:</span>
+                            <div class="restart">
+                                <button type="button" class="reset-button">Đặt lại</button>
+                            </div>
+                        </div>
+                        <div class="filter-section">
+                            <div class="title d-flex justify-content-between">
+                                <div class="name-filter">
+                                    <h3 class="m-0">Hãng hàng không</h3>
+                                </div>
+                                <div class="arrow-icon">
+                                    <i class="fa fa-chevron-up"></i>
+                                </div>
+                            </div>
+                            <ul class="airline-list">
+                                {% set airlines_to_display = airlines_return if outbound_flight else airlines %}
+                                {% for airline in airlines_to_display %}
+                                <li>
+                                    <div class="check col-md-1 d-flex justify-content-center">
+                                        <input type="checkbox" class="airline-filter" name="selected_airlines"
+                                               value="{{ airline.airline_id }}" onchange="this.form.submit();"
+                                               {% if airline.airline_id in selected_airlines %} checked {% endif %}>
+                                    </div>
+                                    <label class="d-flex d-flex col-md-11">
+                                        <div class="col-md-2 logo-flight d-flex justify-content-center">
+                                            <img src="{{ airline.lo_go }}" alt="{{ airline.name }}">
+                                        </div>
+                                        <div class="col-md-10 flight-detail-right flex-column">
+                                            <div class="name-flight">{{ airline.name }}</div>
+                                            <div class="price"
+                                                 style="font-size: 0.8rem; font-weight: 700; color: #7d7d7d;">
+                                                <span>{{ "{:,.0f}".format(airline.price) }} VND</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                        <div>
+                            <hr class="line">
+                        </div>
+
+                        <div class="filter-section">
+                            <div class="title d-flex justify-content-between">
+                                <div class="name-filter">
+                                    <h3 class="m-0">Thời gian bay</h3>
+                                </div>
+                                <div class="arrow-icon2">
+                                    <i class="fa fa-chevron-up"></i>
+                                </div>
+                            </div>
+
+                            <div class="container-main mt-3">
+
+                                <div class="container mt-2 p-1">
+                                    <h6 class="text-left mb-3 f-b">Giờ cất cánh</h6>
+                                    <div class="row flex-column text-center">
+
+                                        <div class="d-flex justify-content-evenly p-0">
+                                            <div class="col-md-5 col-2 mb-3">
+
+                                                <button type="submit" name="departure_time" value="00:00-06:00"
+                                                        class="time-box {% if '00:00-06:00' in selected_departure_times %} active {% endif %}">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Đêm đến Sáng
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">00:00 - 06:00</strong>
+                                                </button>
+
+                                            </div>
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <button type="submit" name="departure_time" value="06:00-12:00"
+                                                        class="time-box {% if '06:00-12:00' in selected_departure_times %} active {% endif %}">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Sáng đến Trưa
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">06:00 - 12:00</strong>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-evenly p-0">
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <button type="submit" name="departure_time" value="12:00-18:00"
+                                                        class="time-box {% if '12:00-18:00' in selected_departure_times %} active {% endif %}">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Trưa đến Tối
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">12:00 - 18:00</strong>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <button type="submit" name="departure_time" value="18:00-24:00"
+                                                        class="time-box {% if '18:00-24:00' in selected_departure_times %} active {% endif %}">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Tối đến Đêm
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">18:00 - 24:00</strong>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="container mt-2 p-1">
+                                    <h6 class="text-left mb-3 f-b">Giờ hạ cánh</h6>
+                                    <div class="row flex-column text-center">
+
+                                        <div class="d-flex justify-content-evenly p-0">
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <div class="time-box flex-column">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Đêm đến Sáng
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">00:00 - 06:00</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <div class="time-box">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Sáng đến Trưa
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">06:00 - 12:00</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-evenly p-0">
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <div class="time-box flex-column">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Trưa đến Tối
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">12:00 - 18:00</strong>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5 col-2 mb-3">
+                                                <div class="time-box">
+                                                    <div class="cl-deep f-3 f-b mb-1">
+                                                        Tối đến Đêm
+                                                    </div>
+                                                    <strong class="f-4 f-b cl-blue">18:00 - 24:00</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <hr class="line">
+                        </div>
+
+                        <div class="filter-section container mt-4">
+                            <div class="slider-header">
+                                <span class="slider-label">Thời gian bay</span>
+                                <span id="slider-output" class="slider-value">0h - 19h</span>
+                            </div>
+                            <div class="range-wrapper">
+                                <div class="range-track"></div>
+                                <div id="range-progress" class="range-progress"></div>
+                                <input id="slider-1" class="range-slider" type="range" min="0" max="19" value="0"
+                                       step="1">
+                                <input id="slider-2" class="range-slider" type="range" min="0" max="19" value="19"
+                                       step="1">
+                            </div>
+                            <div class="slider-footer">
+                                <span>0h</span>
+                                <span>19h</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

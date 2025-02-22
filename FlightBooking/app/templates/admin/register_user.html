@@ -1,0 +1,63 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+<div class="container mt-4">
+    <h2>Đăng ký tài khoản</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label for="user_type">Loại tài khoản:</label>
+            <select class="form-control" id="user_type" name="user_type" required>
+                <option value="Admin">Admin</option>
+                <option value="NhanVien">Nhân viên</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fname">Họ:</label>
+            <input type="text" class="form-control" id="fname" name="fname" required>
+        </div>
+        <div class="form-group">
+            <label for="lname">Tên:</label>
+            <input type="text" class="form-control" id="lname" name="lname" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="username">Tên đăng nhập:</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mật khẩu:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="ngay_vao_lam">Ngày vào làm:</label>
+            <input type="date" class="form-control" id="ngay_vao_lam" name="ngay_vao_lam" required>
+        </div>
+        <div class="form-group" id="kinh_nghiem_field">
+            <label for="kinh_nghiem">Kinh nghiệm:</label>
+            <textarea class="form-control" id="kinh_nghiem" name="kinh_nghiem"></textarea>
+        </div>
+        <div class="form-group" id="luong_field">
+            <label for="luong">Lương:</label>
+            <input type="number" step="0.01" class="form-control" id="luong" name="luong">
+        </div>
+        <div class="form-group" id="ghi_chu_field">
+            <label for="ghi_chu">Ghi chú:</label>
+            <textarea class="form-control" id="ghi_chu" name="ghi_chu"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+</div>
+<script>
+    // Hiển thị/Ẩn trường kinh nghiệm và lương dựa trên loại tài khoản
+    document.getElementById('user_type').addEventListener('change', function () {
+        const userType = this.value;
+        document.getElementById('kinh_nghiem_field').style.display = userType === 'Admin' ? 'block' : 'none';
+        document.getElementById('luong_field').style.display = userType === 'NhanVien' ? 'block' : 'none';
+        document.getElementById('ghi_chu_field').style.display = userType === 'NhanVien' ? 'block' : 'none';
+    });
+    // Khởi tạo trạng thái
+    document.getElementById('user_type').dispatchEvent(new Event('change'));
+</script>
+{% endblock %}

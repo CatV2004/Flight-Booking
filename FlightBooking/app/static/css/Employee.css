@@ -1,0 +1,272 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Ẩn dư ngang */
+}
+
+footer {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-dropdown {
+    position: absolute !important;
+    left: 0 !important;
+    transform: scaleY(0) translateX(-40%) !important;
+    transform-origin: top;
+    opacity: 0;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    display: block;
+}
+
+
+.custom-dropdown.show {
+    transform: scaleY(1) translateX(-40%) !important;
+    opacity: 1;
+}
+
+
+.custom-dropdown .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    text-align: left;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.custom-dropdown .dropdown-item i {
+    font-size: 16px;
+    margin-right: 8px;
+    color: #007bff;
+}
+
+
+.custom-dropdown .dropdown-item:hover {
+    background-color: #000;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sell-ticket-dropdown .dropdown-item:hover {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-secondary {
+    height: 30px !important;
+    width: 30px !important;
+    border-radius: 5px !important;
+    font-size: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: red !important;
+    color: white !important;
+}
+
+/*Cho cac nut +- vao giua*/
+.input-group-sm {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/*Chinh show khi click vao done hoac ben ngoai de dong*/
+.passengers-dropdown {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.passengers-dropdown.show {
+    display: block;
+    transform: scaleY(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/*Chinh ngay di, khu hoi de can giua*/
+
+.row-secondary {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-left: 30px;
+    width: 120%;
+}
+
+/*Chỉnh các button chọn điểm đi và điểm đến*/
+.from-and-to {
+    max-height: 300px !important; /* Giới hạn chiều cao */
+    overflow-y: auto !important; /* Thêm cuộn dọc nếu danh sách quá dài */
+}
+
+.btn-from-and-to {
+    padding: 5px 15px !important;
+    border-radius: 20px !important;
+    font-size: 14px !important;
+    width: auto !important;
+}
+
+.btn-from-and-to:hover {
+    background-color: snow !important;
+    color: #26B4FF !important;
+}
+
+
+/*Chinh hinh anh may bay*/
+
+.image {
+    width: 120%;
+    height: 200px;
+    margin-left: -120px;
+}
+
+/*Chỉnh sửa container*/
+.ticket {
+    margin-top: -70px !important;
+}
+
+.booking-form {
+    background-color: #6c757d !important;
+}
+
+.list-group a {
+    margin-top: 15px !important;
+    width: 100% !important;
+    border-radius: 5px !important;
+}
+
+.list-group a i {
+    margin-right: 15px !important;
+}
+
+.list-group a:hover {
+    background-color: darkgrey;
+    color: #ea4335;
+}
+
+.min-vh-100 {
+    min-height: 60vh !important;
+}
+
+.container.text-center.ticket {
+    display: flex;
+    flex-direction: column;
+    height: auto; /* Đảm bảo chiều cao tự động */
+    overflow: visible; /* Đảm bảo không ẩn nội dung */
+}
+
+/*Chỉnh nút chỉnh sửa*/
+.edit-flight a {
+    text-decoration: none;
+    color: #26B4FF;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.edit-flight:hover {
+    background-color: #f6f6f6 !important;
+
+}
+
+/*Dấu mũi tên*/
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: gray;
+    border-radius: 50%;
+}
+
+.line {
+    flex-grow: 2;
+    height: 1px;
+    background-color: lightgray;
+    margin: 0 8px;
+}
+
+/*CSS cho trang book_tickets*/
+.booking-tickets-form {
+    background-color: black !important;
+}
+
+
+/*CSS cho button chon ghe ngoi*/
+.btn-select-seat {
+    width: 120px;
+    height: 36.5px;
+    border-radius: 5px;
+    border-style: none;
+    background-color: #007bff;
+}
+ .btn-select-seat:hover{
+     background-color: blue;
+ }
+
+ .select-seat{
+     position: absolute;
+     top: 167.5px;
+     right: 40px;
+ }
+
+ /*CSS cho nut xac nhan va huy*/
+.confirm-sell-tickets{
+    background-color: darkgreen;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+
+.confirm-sell-tickets:hover{
+    background-color: green;
+}
+
+.confirm-sell-tickets a:hover{
+    color: white;
+}
+
+.drop-sell-tickets{
+    background-color: #ea4335;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+}
+.drop-sell-tickets a{
+    text-decoration: none;
+}
+
+.drop-sell-tickets:hover{
+    background-color: red;
+}
+
+.drop-sell-tickets a:hover{
+    color: white;
+}
+
+/*CSS cho dãy ghế click vào sẽ đổi màu*/
+.seat:hover{
+    background-color: darkgray !important;
+}
+
+.selected{
+    background-color: green
+}
+
+.error {
+    border: 2px solid red !important;
+}

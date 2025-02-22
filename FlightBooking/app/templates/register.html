@@ -1,0 +1,204 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+        background: linear-gradient(120deg, #6a11cb, #2575fc);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 2rem;
+        background: #fff;
+    }
+
+    .btn-login {
+        font-size: 0.9rem;
+        letter-spacing: 0.05rem;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        border-radius: 50px;
+    }
+
+    .btn-login:hover {
+        background-color: #4e8ef7;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+
+    .btn-google, .btn-facebook {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.05rem;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-google {
+        background-color: #db4437;
+        color: #fff;
+    }
+
+    .btn-google:hover {
+        background-color: #c23321;
+        box-shadow: 0 4px 15px rgba(219, 68, 55, 0.5);
+    }
+
+    .btn-facebook {
+        background-color: #4267b2;
+        color: #fff;
+    }
+
+    .btn-facebook:hover {
+        background-color: #365899;
+        box-shadow: 0 4px 15px rgba(66, 103, 178, 0.5);
+    }
+
+    .form-control:focus {
+        border-color: #6a11cb;
+        box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+    }
+
+    .form-floating > label {
+        color: #888;
+        font-weight: 500;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 1.5rem 0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #ddd;
+        margin: 0 1rem;
+    }
+
+    .divider span {
+        font-weight: 600;
+        color: #888;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .link {
+        color: #6a11cb;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .link:hover {
+        color: #2575fc;
+    }
+
+</style>
+
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Đăng ký</h5>
+                    {% if err_msg %}
+                    <div class="alert alert-danger">
+                        {{ err_msg }}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" action="/register" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="last_name" placeholder="Họ"
+                                           name="last_name" required>
+                                    <label for="last_name">Họ</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="first_name" placeholder="Tên"
+                                           name="first_name" required>
+                                    <label for="first_name">Tên</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="Tên đăng nhập" name="username" required>
+                            <label for="username">Tên đăng nhập</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
+                            <label for="email">Địa chỉ Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Mật khẩu" name="password" required>
+                            <label for="password">Mật khẩu</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="confirm" placeholder="Xác nhận mật khẩu" name="confirm" required>
+                            <label for="confirm">Xác nhận mật khẩu</label>
+                        </div>
+
+                        <div class="d-grid mb-2">
+                            <button class="btn btn-primary btn-lg btn-login fw-bold text-uppercase" type="submit">
+                                Đăng ký
+                            </button>
+                        </div>
+
+                        <a class="d-block text-center mt-2 small" href="/login">Đã có tài khoản? Đăng nhập</a>
+
+                        <hr class="my-4">
+
+                        <div class="d-grid mb-2">
+                            <a href="{{ url_for('login_google') }}" class="btn btn-google btn-lg btn-login fw-bold text-uppercase">
+                                <i class="fab fa-google me-2"></i> Đăng nhập với Google
+                            </a>
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-facebook btn-lg btn-login fw-bold text-uppercase" type="button">
+                                <i class="fab fa-facebook-f me-2"></i> Đăng nhập với Facebook
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+{% endblock %}

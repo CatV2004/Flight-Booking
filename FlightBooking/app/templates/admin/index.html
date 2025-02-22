@@ -1,0 +1,17 @@
+{% extends 'admin/base.html' %}
+
+{% block body %}
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}"/>
+
+{% if current_user.is_authenticated %}
+
+<h1 class="welcome-title">
+    <span class="welcome-text">WELCOME</span>
+    <span class="user-name">{{ current_user.fname }}</span>
+    <span class="sub-title">TO FLIGHTBOOKING</span>
+</h1>
+
+{% else %}
+{% include 'admin/form_login.html' %}
+{% endif %}
+{% endblock %}

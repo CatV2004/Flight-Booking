@@ -1,0 +1,817 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.header-card {
+    background-color: #0d57a6db;
+    color: white;
+    border-radius: 12px;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 7rem;
+}
+
+h4 {
+    font-weight: bold;
+    font-size: 1.35rem;
+}
+
+.cl-deep {
+    color: #828282;
+    font-weight: 300;
+}
+
+.header-card h5 {
+    font-weight: 750;
+    font-size: 1.7rem;
+}
+
+.header-card .details {
+    font-size: 0.875rem;
+    color: #d1d1d1;
+}
+
+.header-card .search-icon {
+    color: #007bff;
+    border-radius: 1rem;
+    padding: 5px;
+}
+
+.header-card .search-icon:hover {
+    background-color: #1400c4;
+}
+
+.flight-card {
+    background-color: #edf4f8;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.general-flight-card {
+    /* .flight-card { */
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Arial, sans-serif;
+    height: 8rem;
+}
+
+.flight-header h6 {
+    margin: 0;
+    font-size: 14px;
+    color: #d8232a;
+    /* Màu đặc trưng của VietJet */
+}
+
+.flight-details {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.time-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.text-muted {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+
+.choose-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.choose-btn:hover {
+    background-color: #0056b3;
+}
+
+
+.choose-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.choose-btn:hover {
+    background-color: #0056b3;
+}
+
+.filter-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.circle-icon {
+    width: 30px;
+    /* Kích thước hình tròn */
+    height: 30px;
+    /* Màu nền xanh */
+    border-radius: 50%;
+    /* Biến thành hình tròn */
+    display: flex;
+    /* Sử dụng flex để căn giữa icon */
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    color: #ff0000;
+    /* Màu chữ/icon */
+    font-size: 16px;
+    /* Kích thước icon */
+    cursor: pointer;
+    /* Thay đổi con trỏ khi rê chuột */
+}
+
+.circle-image {
+    width: 30px;
+    /* Đường kính hình tròn */
+    height: 30px;
+    border-radius: 50%;
+    /* Biến thành hình tròn */
+    overflow: hidden;
+    /* Đảm bảo hình ảnh không bị tràn ra ngoài */
+    display: flex;
+    justify-content: center;
+    /* Căn giữa hình ảnh */
+    align-items: center;
+    /* Căn giữa hình ảnh */
+    background-color: #f0f0f0;
+    /* Màu nền (nếu cần) */
+}
+
+.circle-image img {
+    width: 100%;
+    /* Hình ảnh vừa khít với hình tròn */
+    height: 100%;
+    /* Đảm bảo hình ảnh không bị méo */
+    object-fit: cover;
+    /* Cắt hình ảnh để phù hợp với hình tròn */
+}
+
+.ms-3 {
+    margin-left: 16px;
+    /* Khoảng cách giữa hình tròn và nội dung kế tiếp */
+}
+
+.time {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+p {
+    font-size: 1rem;
+}
+
+.p2 {
+    font-size: 0.9rem;
+}
+
+.flight-you {
+    padding-top: 10px;
+    border-radius: 10px;
+}
+/* Thẻ card chuyến bay */
+.trip-card {
+    background-color: #f7f7f7;
+    /* Màu nền nhạt */
+    border-radius: 8px;
+    /* Bo góc */
+    padding: 20px;
+    /* Khoảng cách bên trong */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Hiệu ứng bóng */
+    width: 90%;
+    /* Chiều rộng thẻ */
+    margin: 0 20px 20px 20px;
+    /* Khoảng cách ngoài */
+}
+
+/* Header chuyến bay */
+.trip-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.trip-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.trip-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Danh sách chuyến bay */
+.trip-list {
+    padding-left: 10px;
+}
+
+/* Mỗi chuyến bay */
+.trip-item {
+    background-color: #ffffff;
+    /* Màu nền trắng cho mỗi chuyến bay */
+    margin-bottom: 10px;
+    border-radius: 6px;
+    padding: 15px;
+    border-left: 4px solid #007bff;
+    /* Đường viền bên trái */
+}
+
+/* Chi tiết chuyến bay */
+.trip-details {
+    padding: 1px;
+}
+
+.trip-detail-left {
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    border-radius: 0.6rem;
+}
+
+.trip-number {
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.5rem;
+    /* Màu của số chuyến bay */
+}
+
+.trip-date {
+    color: #777777;
+    /* Màu nhạt cho ngày tháng */
+}
+
+.trip-route {
+    font-size: 14px;
+    color: #333333;
+    /* Màu tối cho lộ trình */
+}
+
+/* Bộ lọc */
+.filter-section {
+    font-family: Arial, sans-serif;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 1rem;
+}
+
+.container-left {
+    /* position: fixed;
+    width: 430px; */
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: top 0.1s ease, height 0.1s ease; /* Thêm hiệu ứng cho top và height */
+    border-radius: 10px;
+    border: 2px solid #f7f7f7;
+    overflow: hidden;
+}
+
+.container-left > * {
+    flex-grow: 1;  /* Cho phép các phần tử con thay đổi chiều cao theo cha */
+    overflow: auto;
+}
+
+.filter-container {
+    max-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    /* Áp dụng cho Firefox */
+    scrollbar-color: #888 #f1f1f1;
+    /* Màu thanh trượt và nền */
+
+    /* Để kiểm soát tốt hơn trong các trình duyệt WebKit như Chrome, Edge, và Safari */
+    -webkit-scrollbar {
+        width: 8px;
+        /* Độ rộng thanh trượt */
+    }
+
+    -webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* Màu nền của track */
+    }
+
+    -webkit-scrollbar-thumb {
+        background-color: #888;
+        /* Màu thanh trượt */
+        border-radius: 4px;
+        /* Góc tròn thanh trượt */
+        border: 1px solid #f1f1f1;
+        /* Đường viền bao quanh */
+    }
+
+    -webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        /* Màu thanh trượt khi hover */
+    }
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-header span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reset-link {
+    text-decoration: none;
+    font-size: 14px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.reset-link:hover {
+    text-decoration: underline;
+}
+
+.filter-section h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.airline-list {
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 20px;
+}
+
+.container-main {
+    display: block;
+}
+
+
+/* Ẩn danh sách khi có lớp .hidden */
+.airline-list.hidden,
+.container-main.hidden {
+    display: none;
+}
+
+.arrow-icon,
+.arrow-icon2 {
+    cursor: pointer;
+}
+
+/* Quay icon khi nhấn */
+.arrow-icon.rotate i,
+.arrow-icon2.rotate i {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+/* Quay icon ban đầu */
+.arrow-icon i,
+.arrow-icon2 i {
+    transition: transform 0.3s ease;
+}
+
+.airline-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.airline-list input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.airline-list label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.airline-list img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.price {
+    margin-left: auto;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.check {
+    margin-right: 10px;
+}
+
+.check input {
+    width: 30px;
+    height: 30px;
+}
+
+.logo-flight img {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.restart button {
+    font-weight: bold;
+    color: rgb(0 123 255);
+    border: none;
+    background-color: #ffffff;
+}
+
+.name-flight {
+    font-size: 1.1rem;
+    font-weight: bold;
+
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 10px 0;
+}
+
+.divider span {
+    width: 100px;
+    /* Độ dài đường kẻ */
+    height: 2px;
+    /* Độ dày đường kẻ */
+    background-color: #ccc;
+    /* Màu đường kẻ */
+    position: relative;
+}
+
+.divider span::before,
+.divider span::after {
+    content: "";
+    width: 10px;
+    /* Kích thước đầu tròn */
+    height: 10px;
+    background-color: #7c7c7c;
+    /* Màu đầu tròn */
+    border-radius: 50%;
+    /* Tạo hình tròn */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.divider span::before {
+    left: -10px;
+    /* Định vị đầu tròn bên trái */
+}
+
+.divider span::after {
+    right: -10px;
+    /* Định vị đầu tròn bên phải */
+}
+
+div hr.line {
+    border: none;
+    height: 2px;
+    /* Độ dày của đường kẻ */
+    background: rgba(0, 0, 0, 0.2);
+    /* Màu sắc mờ (đen với độ mờ 20%) */
+    margin: 10px 0;
+    /* Khoảng cách trên và dưới đường kẻ */
+    width: 100%;
+    /* Độ dài của đường kẻ */
+    margin: 20px 0;
+}
+
+.time-box {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.time-box:hover {
+    background-color: #c1e2ff;
+    color: #007bff;
+}
+
+.time-box.active {
+    background-color: #007bff38;
+    color: white;
+}
+
+.f-2 {
+    font-size: 0.7rem;
+}
+
+.f-3 {
+    font-size: 0.8rem;
+}
+
+.f-b {
+    font-weight: bold;
+}
+
+.fw {
+    font-weight: 500;
+}
+
+.f-4 {
+    font-size: 1rem;
+}
+
+.cl-blue {
+    color: #007bff;
+}
+
+.slider-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.slider-header .slider-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.slider-header .slider-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.range-wrapper {
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.range-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 6px;
+    background-color: #d9d9d9;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.range-progress {
+    position: absolute;
+    top: 50%;
+    height: 6px;
+    background-color: #007bff;
+    border-radius: 5px;
+    transform: translateY(-50%);
+}
+
+.range-slider {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 30px;
+    background: transparent;
+    pointer-events: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #007bff;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.range-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #007bff;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.slider-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.slider-footer span {
+    font-size: 14px;
+    color: #666;
+}
+
+/* detail-flight-card */
+.detail-flight-card {
+    display: none;
+}
+
+/* Tạo class mới cho phần Chi tiết */
+.detail-toggle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+/* Hiệu ứng hover cho Chi tiết */
+.detail-toggle:hover {
+    color: #007bff;
+    /* Đổi màu chữ khi hover */
+}
+
+/* Thêm đường gạch dưới khi hover */
+.detail-toggle::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    /* Màu của đường gạch dưới */
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng mở đường gạch dưới khi hover */
+.detail-toggle:hover::after {
+    transform: scaleX(1);
+    /* Mở rộng đường gạch dưới khi hover */
+}
+
+/* Phần chi tiết chuyến bay */
+.detail-flight-card {
+    display: none;
+    margin-top: 5px;
+    padding: 20px;
+    background-color: #e5f0f6;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: max-height 0.7s ease-out, padding 0.3s ease;
+}
+
+/* Phần tử thông tin chuyến bay */
+.flight-schedule {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Hiệu ứng cho các phần tử con */
+.flight-schedule .time {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+Giữ hiệu ứng hover sau khi nhấn .detail-toggle.active {
+    color: #007bff;
+}
+
+.detail-toggle.active::after {
+    transform: scaleX(1);
+    /* Giữ đường gạch dưới khi đã nhấn */
+}
+
+/* Hiệu ứng hover cho nút Chi tiết */
+.detail-toggle {
+    cursor: pointer;
+    position: relative;
+}
+
+.detail-toggle:hover {
+    color: #007bff;
+}
+
+/* Giữ hiệu ứng hover sau khi nhấn */
+.detail-toggle.active {
+    color: #007bff;
+}
+
+.detail-toggle.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(1);
+    /* Giữ đường gạch dưới khi đã nhấn */
+    transition: transform 0.3s ease;
+}
+
+
+
+/* Tạo hình tròn */
+.circle {
+    position: absolute;
+    top: 10px;
+    /* Điều chỉnh cho hình tròn nằm ở trên đường thẳng */
+    left: 27%;
+    /* Dịch chuyển hình tròn về giữa hoàn hảo */
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #00aaff;
+    /* Màu viền */
+    background-color: white;
+    /* Màu nền */
+    border-radius: 50%;
+    /* Hình tròn */
+    justify-content: space-around;
+    z-index: 100;
+}
+
+/* Đường thẳng */
+.line-col {
+    position: absolute;
+    justify-content: space-around;
+    top: 50px;
+    /* Đảm bảo đường thẳng nằm ngay dưới hình tròn */
+    left: 50%;
+    /* Canh giữa đường thẳng theo chiều ngang */
+    transform: translate(-50%, -50%) rotate(90deg);
+    /* Xoay đường thẳng 90 độ */
+    /* Dịch chuyển đường thẳng về giữa */
+    width: 150px;
+    /* Độ dài của đường thẳng */
+    height: 1px;
+    /* Độ dày của đường thẳng */
+    background-color: #666;
+    /* Màu sắc của đường thẳng */
+}
+
+.btn-primary {
+    background-color: #007bff;  /* Màu nền xanh */
+    color: white;  /* Màu chữ trắng */
+    font-size: 16px;  /* Kích thước chữ */
+    padding: 10px 20px;  /* Khoảng cách bên trong nút */
+    border-radius: 5px;  /* Bo tròn các góc */
+    text-align: center;  /* Căn giữa nội dung */
+    text-decoration: none;  /* Xóa gạch chân */
+    transition: background-color 0.3s ease;  /* Hiệu ứng chuyển màu nền khi hover */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;  /* Màu nền khi hover (darker blue) */
+    cursor: pointer;  /* Con trỏ chuột khi hover */
+}
+
+.btn-primary:focus {
+    outline: none;  /* Bỏ viền khi nút được chọn */
+}
